@@ -45,15 +45,19 @@ public class Manga {
     @JoinColumn(name = "id_author", foreignKey = @ForeignKey(name = "fk_manga_author_text"))
     private Author author;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "manga_genre", joinColumns = @JoinColumn(name = "id_genre"))
     Set<Genre> genres;
+    
+    @OneToMany(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "id_chapter")
+    Set<Chapter> chapters;
 
     public Manga() { }
 
     public Manga(Long idManga, String mainTitle, String alternativeTitle, String linkImage, Byte[] blobImage,
             String description, String status, String evaluation, LocalDate releaseDate, LocalDate lastUpdate,
-            Author author, Set<Genre> genres) {
+            Author author, Set<Genre> genres, Set<Chapter> chapters) {
         this.idManga = idManga;
         this.mainTitle = mainTitle;
         this.alternativeTitle = alternativeTitle;
@@ -66,6 +70,7 @@ public class Manga {
         this.lastUpdate = lastUpdate;
         this.author = author;
         this.genres = genres;
+        this.chapters = chapters;
     }
 
     public Long getIdManga() {
@@ -162,6 +167,14 @@ public class Manga {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
+    }
+
+    public Set<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(Set<Chapter> chapters) {
+        this.chapters = chapters;
     }
 
 }
