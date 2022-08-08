@@ -39,7 +39,9 @@ create table chapter (
 drop table if exists genre;
 create table genre (
     id_genre bigint primary key auto_increment,
-    name varchar(50) unique not null
+    name varchar(50) unique not null,
+    age_group varchar(9) not null,
+    description varchar(250)
 );
 
 drop table if exists manga_genre;
