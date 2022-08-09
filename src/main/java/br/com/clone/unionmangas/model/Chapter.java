@@ -24,7 +24,7 @@ public class Chapter {
     private Byte[] blobChapter;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_manga", foreignKey = @ForeignKey(name = "fk_chapter_manga"))
+    @JoinColumn(name = "manga", foreignKey = @ForeignKey(name = "fk_chapter_manga"))
     private Manga manga;
 
     public Chapter() { }

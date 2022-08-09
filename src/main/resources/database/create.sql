@@ -28,8 +28,8 @@ create table author (
 drop table if exists chapter;
 create table chapter (
     id_chapter bigint primary key auto_increment,
-    number bigint not null,
     number_chapter bigint not null,
+    number_pages bigint not null,
     release_date date not null,
     link_chapter varchar(500),
     blob_chapter mediumblob,

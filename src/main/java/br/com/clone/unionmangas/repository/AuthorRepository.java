@@ -11,7 +11,7 @@ import br.com.clone.unionmangas.model.Author;
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     @Query("SELECT author FROM Author author "
-            + "WHERE author.name = :name")
+            + "WHERE author.name LIKE CONCAT('%', :name, '%')")
     public Author findByName(@Param("name") String name);
 
 }

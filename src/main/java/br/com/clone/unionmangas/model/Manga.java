@@ -33,7 +33,7 @@ public class Manga {
     private String status;
 
     @Column(name = "evaluation")
-    private String evaluation;
+    private Double evaluation;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
@@ -41,22 +41,37 @@ public class Manga {
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_author", foreignKey = @ForeignKey(name = "fk_manga_author_text"))
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "author", foreignKey = @ForeignKey(name = "fk_manga_author"))
     private Author author;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "manga_genre", joinColumns = @JoinColumn(name = "id_genre"))
+    @JoinTable(name = "manga_genre", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
     Set<Genre> genres;
     
-    @OneToMany(fetch =  FetchType.LAZY)
-    @JoinColumn(name = "id_chapter")
+    @OneToMany(mappedBy = "manga")
     Set<Chapter> chapters;
 
     public Manga() { }
 
+    public Manga(String mainTitle, String alternativeTitle, String linkImage, Byte[] blobImage,
+            String description, String status, Double evaluation, LocalDate releaseDate, LocalDate lastUpdate,
+            Author author, Set<Genre> genres) {
+        this.mainTitle = mainTitle;
+        this.alternativeTitle = alternativeTitle;
+        this.linkImage = linkImage;
+        this.blobImage = blobImage;
+        this.description = description;
+        this.status = status;
+        this.evaluation = evaluation;
+        this.releaseDate = releaseDate;
+        this.lastUpdate = lastUpdate;
+        this.author = author;
+        this.genres = genres;
+    }
+    
     public Manga(Long idManga, String mainTitle, String alternativeTitle, String linkImage, Byte[] blobImage,
-            String description, String status, String evaluation, LocalDate releaseDate, LocalDate lastUpdate,
+            String description, String status, Double evaluation, LocalDate releaseDate, LocalDate lastUpdate,
             Author author, Set<Genre> genres, Set<Chapter> chapters) {
         this.idManga = idManga;
         this.mainTitle = mainTitle;
@@ -129,11 +144,11 @@ public class Manga {
         this.status = status;
     }
 
-    public String getEvaluation() {
+    public Double getEvaluation() {
         return evaluation;
     }
 
-    public void setEvaluation(String evaluation) {
+    public void setEvaluation(Double evaluation) {
         this.evaluation = evaluation;
     }
 

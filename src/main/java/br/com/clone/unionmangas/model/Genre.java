@@ -15,15 +15,21 @@ public class Genre {
 
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "age_group")
     @Enumerated(EnumType.STRING)
     private AgeGroupEnum ageGroup;
 
     public Genre() { }
+
+    public Genre(String name, AgeGroupEnum ageGroup, String description) {
+        this.name = name;
+        this.ageGroup = ageGroup;
+        this.description = description;
+    }
 
     public Genre(Long idGenre, String name, AgeGroupEnum ageGroup, String description) {
         this.idGenre = idGenre;
@@ -63,5 +69,4 @@ public class Genre {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
