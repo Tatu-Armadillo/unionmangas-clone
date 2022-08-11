@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.model.Author;
@@ -70,9 +71,9 @@ public class MangaService {
         mangaDb.setEvaluation(manga.getEvaluation());
         mangaDb.setReleaseDate(manga.getReleaseDate());
 
+        mangaDb.setLinkImage(manga.getLinkImage());
         mangaDb.setGenres(manga.getGenres());
 
-        this.updateImage(idManga, manga.getLinkImage(), manga.getBlobImage());
         this.setReturnAuthor(mangaDb, manga.getAuthor());
         return mangaDb;
     }
@@ -84,10 +85,13 @@ public class MangaService {
         return response;
     }
 
-    private void updateImage(final Long idManga, final String linkImage, final Byte[] blobImage) {
-        var manga = this.mangaRepository.findById(idManga).orElseThrow();
-        manga.setLinkImage(linkImage);
-        manga.setBlobImage(blobImage); // TODO apply image treatment rule
+    public void updateBlobImage(final Long idManga, final MultipartFile blobImage) {
+        try {
+            var manga = this.mangaRepository.findById(idManga).orElseThrow();
+            manga.setBlobImage(blobImage.getBytes()); // TODO apply image treatment rule
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     private void setReturnAuthor(Manga mangaDb, Author author) {

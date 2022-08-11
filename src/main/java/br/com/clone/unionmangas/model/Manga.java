@@ -24,7 +24,7 @@ public class Manga {
     private String linkImage;
 
     @Column(name = "blob_image")
-    private Byte[] blobImage;
+    private byte[] blobImage;
 
     @Column(name = "description")
     private String description;
@@ -54,7 +54,7 @@ public class Manga {
 
     public Manga() { }
 
-    public Manga(String mainTitle, String alternativeTitle, String linkImage, Byte[] blobImage,
+    public Manga(String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
             String description, String status, Double evaluation, LocalDate releaseDate, LocalDate lastUpdate,
             Author author, Set<Genre> genres) {
         this.mainTitle = mainTitle;
@@ -70,7 +70,7 @@ public class Manga {
         this.genres = genres;
     }
     
-    public Manga(Long idManga, String mainTitle, String alternativeTitle, String linkImage, Byte[] blobImage,
+    public Manga(Long idManga, String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
             String description, String status, Double evaluation, LocalDate releaseDate, LocalDate lastUpdate,
             Author author, Set<Genre> genres, Set<Chapter> chapters) {
         this.idManga = idManga;
@@ -120,11 +120,11 @@ public class Manga {
         this.linkImage = linkImage;
     }
 
-    public Byte[] getBlobImage() {
+    public byte[] getBlobImage() {
         return blobImage;
     }
 
-    public void setBlobImage(Byte[] blobImage) {
+    public void setBlobImage(byte[] blobImage) {
         this.blobImage = blobImage;
     }
 
