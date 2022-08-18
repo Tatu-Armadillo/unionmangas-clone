@@ -43,8 +43,8 @@ public class MangaService {
         Set<Genre> genres = this.genreService.checkGenres(manga.getGenres());
         manga.setGenres(genres);
 
-        if (manga.getEvaluation() == null) {
-            manga.setEvaluation(0.0);
+        if (manga.getRating() == null) {
+            manga.setRating(0.0);
         }
 
         var response = mangaRepository.save(manga);
@@ -59,7 +59,7 @@ public class MangaService {
         mangaDb.setAlternativeTitle(manga.getAlternativeTitle());
         mangaDb.setDescription(manga.getDescription());
         mangaDb.setStatus(manga.getStatus());
-        mangaDb.setEvaluation(manga.getEvaluation());
+        mangaDb.setRating(manga.getRating());
         mangaDb.setReleaseDate(manga.getReleaseDate());
 
         mangaDb.setLinkImage(manga.getLinkImage());

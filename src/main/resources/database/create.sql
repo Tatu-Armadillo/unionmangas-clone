@@ -12,7 +12,7 @@ create table manga (
     volume_quantity int default 0 ,
     description varchar(250) not null,
     status varchar(10) not null,
-    evaluation decimal(4,2) default 0.0,
+    rating decimal(4,2) default 0.0,
     release_date date not null,
     last_update date not null,
     author bigint not null

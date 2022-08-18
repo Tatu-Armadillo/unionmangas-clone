@@ -32,8 +32,8 @@ public class Manga {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "evaluation")
-    private Double evaluation;
+    @Column(name = "rating")
+    private Double rating;
 
     @Column(name = "volume_quantity")
     private Integer volumeQuantity;
@@ -59,7 +59,7 @@ public class Manga {
     }
 
     public Manga(String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
-            String description, String status, Double evaluation, Integer volumeQuantity,
+            String description, String status, Double rating, Integer volumeQuantity,
             LocalDate releaseDate, LocalDate lastUpdate, Author author, Set<Genre> genres) {
         this.mainTitle = mainTitle;
         this.alternativeTitle = alternativeTitle;
@@ -67,7 +67,7 @@ public class Manga {
         this.blobImage = blobImage;
         this.description = description;
         this.status = status;
-        this.evaluation = evaluation;
+        this.rating = rating;
         this.volumeQuantity = volumeQuantity;
         this.releaseDate = releaseDate;
         this.lastUpdate = lastUpdate;
@@ -76,7 +76,7 @@ public class Manga {
     }
 
     public Manga(Long idManga, String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
-            String description, String status, Double evaluation, Integer volumeQuantity, 
+            String description, String status, Double rating, Integer volumeQuantity, 
             LocalDate releaseDate, LocalDate lastUpdate, Author author, Set<Genre> genres, Set<Chapter> chapters) {
         this.idManga = idManga;
         this.mainTitle = mainTitle;
@@ -85,7 +85,7 @@ public class Manga {
         this.blobImage = blobImage;
         this.description = description;
         this.status = status;
-        this.evaluation = evaluation;
+        this.rating = rating;
         this.volumeQuantity = volumeQuantity;
         this.releaseDate = releaseDate;
         this.lastUpdate = lastUpdate;
@@ -150,12 +150,12 @@ public class Manga {
         this.status = status;
     }
 
-    public Double getEvaluation() {
-        return evaluation;
+    public Double getRating() {
+        return rating;
     }
 
-    public void setEvaluation(Double evaluation) {
-        this.evaluation = evaluation;
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public Integer getVolumeQuantity() {
