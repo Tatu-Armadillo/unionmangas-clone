@@ -1,6 +1,11 @@
 package br.com.clone.unionmangas.model;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "chapter")
@@ -11,32 +16,51 @@ public class Chapter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idChapter;
 
+    @Column(name = "number_volume")
+    private Integer numberVolume;
+
     @Column(name = "number_chapter")
-    private Long numberChapter;
+    private Integer numberChapter;
 
     @Column(name = "number_pages")
-    private Long numberPages;
+    private Integer numberPages;
+
+    @Column(name = "release_date")
+    private LocalDate releaseDate;
 
     @Column(name = "link_chapter")
-    private Byte[] linkChapter;
+    private String linkChapter;
 
     @Column(name = "blob_chapter")
     private Byte[] blobChapter;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "manga", foreignKey = @ForeignKey(name = "fk_chapter_manga"))
     private Manga manga;
 
-    public Chapter() { }
+    public Chapter() {
+    }
 
-    public Chapter(Long idChapter, Long numberChapter, Long numberPages, Byte[] linkChapter, Byte[] blobChapter,
-            Manga manga) {
+    public Chapter(Long idChapter, Integer numberVolume, Integer numberChapter, Integer numberPages,
+            LocalDate releaseDate, String linkChapter, Byte[] blobChapter, Manga manga) {
         this.idChapter = idChapter;
+        this.numberVolume = numberVolume;
         this.numberChapter = numberChapter;
         this.numberPages = numberPages;
         this.linkChapter = linkChapter;
         this.blobChapter = blobChapter;
         this.manga = manga;
+    }
+
+    public Chapter(Long idChapter, Integer numberVolume, Integer numberChapter, Integer numberPages,
+            LocalDate releaseDate, String linkChapter, Byte[] blobChapter) {
+        this.idChapter = idChapter;
+        this.numberVolume = numberVolume;
+        this.numberChapter = numberChapter;
+        this.numberPages = numberPages;
+        this.linkChapter = linkChapter;
+        this.blobChapter = blobChapter;
     }
 
     public Long getIdChapter() {
@@ -47,27 +71,43 @@ public class Chapter {
         this.idChapter = idChapter;
     }
 
-    public Long getNumberChapter() {
+    public Integer getNumberVolume() {
+        return numberVolume;
+    }
+
+    public void setNumberVolume(Integer numberVolume) {
+        this.numberVolume = numberVolume;
+    }
+
+    public Integer getNumberChapter() {
         return numberChapter;
     }
 
-    public void setNumberChapter(Long numberChapter) {
+    public void setNumberChapter(Integer numberChapter) {
         this.numberChapter = numberChapter;
     }
 
-    public Long getNumberPages() {
+    public Integer getNumberPages() {
         return numberPages;
     }
 
-    public void setNumberPages(Long numberPages) {
+    public void setNumberPages(Integer numberPages) {
         this.numberPages = numberPages;
     }
 
-    public Byte[] getLinkChapter() {
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getLinkChapter() {
         return linkChapter;
     }
 
-    public void setLinkChapter(Byte[] linkChapter) {
+    public void setLinkChapter(String linkChapter) {
         this.linkChapter = linkChapter;
     }
 
@@ -85,6 +125,17 @@ public class Chapter {
 
     public void setManga(Manga manga) {
         this.manga = manga;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || this.getClass() != o.getClass())
+            return false;
+        Chapter that = (Chapter) o;
+        return Objects.equals(this.numberVolume, that.numberVolume)
+                && Objects.equals(this.numberChapter, that.numberChapter);
     }
 
 }
