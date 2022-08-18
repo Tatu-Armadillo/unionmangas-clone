@@ -1,9 +1,27 @@
-<div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring-boot" height="100"/>
-</div>
+<div align="center"> 
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring-boot" height="100"/> 
+</div> 
 
-# Clone Site Leitor
-Descrição....
+# Clone Site Leitor 
+````
+Interpreting and implementing the manga readers backend
+````
+# Initial Settings 
+````
+Configure environment variables
+````
 
-# Initial Settings
-Descrição...
+`application.properties`
+* spring.datasource.url
+* spring.datasource.username 
+* spring.datasource.password
+
+````
+Run the file to create the database
+````
+`create.sql`
+
+````
+insert genres in database
+````
+`insertgenres.sql`
