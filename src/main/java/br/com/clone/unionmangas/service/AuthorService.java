@@ -1,5 +1,8 @@
 package br.com.clone.unionmangas.service;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,23 +17,30 @@ public class AuthorService {
     private AuthorRepository authorRepository;
 
     public Author findByName(final String name) {
-        var reponse = this.authorRepository.findByName(name);
-        if (reponse == null) {
-            return new Author();
-            // throw new NegocioException("Author not found");
-        }
-        return reponse;
+        var response = this.authorRepository.findByName(name);
+        return response;
     }
 
     public Author findById(final Long idAuthor) {
-        var reponse = this.authorRepository.findById(idAuthor)
+        var response = this.authorRepository.findById(idAuthor)
                 .orElseThrow(() -> new NegocioException("Author not found"));
-        return reponse;
+        return response;
     }
 
     public Author create(final Author author) {
-        var reponse = this.authorRepository.save(author);
-        return reponse;
+        var response = this.findByName(author.getName());
+        if (response == null) {
+            author.setAge(this.calcAge(author.getBirthdate()));
+            response = this.authorRepository.save(author);
+        }
+        return response;
+    }
+
+    private Long calcAge(LocalDate birthdate) {
+        final var currentDate = LocalDate.now();
+        final Period period = Period.between(birthdate, currentDate);
+        Long age = Long.parseLong(period.getYears() + "");
+        return age;
     }
 
 }

@@ -31,14 +31,12 @@ public class MangaController {
     public ResponseEntity<List<Manga>> findAllMangas(
             @RequestParam(required = false, defaultValue = "") final String filter) {
         var response = this.mangaService.findAllByName(filter);
-        System.out.println(response);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{idManga}")
     public ResponseEntity<Manga> findById(@PathVariable final Long idManga) {
         var response = this.mangaService.findById(idManga);
-
         return ResponseEntity.ok(response);
     }
 
@@ -60,7 +58,7 @@ public class MangaController {
     @Transactional
     public ResponseEntity<?> updateImageManga(@PathVariable final Long idManga,
             @RequestParam final MultipartFile image) {
-        this.mangaService.updateBlobImage(idManga, image);
+        this.mangaService.updateCover(idManga, image);
         return ResponseEntity.ok("OK");
     }
 

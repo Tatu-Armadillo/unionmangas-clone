@@ -1,9 +1,6 @@
 package br.com.clone.unionmangas.service;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.clone.unionmangas.exception.NegocioException;
-import br.com.clone.unionmangas.model.Author;
-import br.com.clone.unionmangas.model.Genre;
-import br.com.clone.unionmangas.model.Manga;
+import br.com.clone.unionmangas.model.*;
 import br.com.clone.unionmangas.repository.MangaRepository;
 
 @Service
@@ -45,11 +40,7 @@ public class MangaService {
         var author = this.authorService.create(manga.getAuthor());
         manga.setAuthor(author);
 
-        Set<Genre> genres = new HashSet<>();
-        manga.getGenres().forEach(g -> {
-            var genre = this.genreService.findByName(g.getName());
-            genres.add(genre);
-        });
+        Set<Genre> genres = this.genreService.checkGenres(manga.getGenres());
         manga.setGenres(genres);
 
         if (manga.getEvaluation() == null) {
@@ -85,12 +76,12 @@ public class MangaService {
         return response;
     }
 
-    public void updateBlobImage(final Long idManga, final MultipartFile blobImage) {
+    public void updateCover(final Long idManga, final MultipartFile blobImage) {
         try {
             var manga = this.mangaRepository.findById(idManga).orElseThrow();
-            manga.setBlobImage(blobImage.getBytes()); // TODO apply image treatment rule
+            manga.setBlobImage(blobImage.getBytes());
         } catch (Exception e) {
-            System.out.println(e);
+            throw new NegocioException("Update cover error");
         }
     }
 
