@@ -35,6 +35,9 @@ public class Manga {
     @Column(name = "evaluation")
     private Double evaluation;
 
+    @Column(name = "volume_quantity")
+    private Integer volumeQuantity;
+
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
@@ -48,15 +51,16 @@ public class Manga {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "manga_genre", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
     Set<Genre> genres;
-    
+
     @OneToMany(mappedBy = "manga")
     Set<Chapter> chapters;
 
-    public Manga() { }
+    public Manga() {
+    }
 
     public Manga(String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
-            String description, String status, Double evaluation, LocalDate releaseDate, LocalDate lastUpdate,
-            Author author, Set<Genre> genres) {
+            String description, String status, Double evaluation, Integer volumeQuantity,
+            LocalDate releaseDate, LocalDate lastUpdate, Author author, Set<Genre> genres) {
         this.mainTitle = mainTitle;
         this.alternativeTitle = alternativeTitle;
         this.linkImage = linkImage;
@@ -64,15 +68,16 @@ public class Manga {
         this.description = description;
         this.status = status;
         this.evaluation = evaluation;
+        this.volumeQuantity = volumeQuantity;
         this.releaseDate = releaseDate;
         this.lastUpdate = lastUpdate;
         this.author = author;
         this.genres = genres;
     }
-    
+
     public Manga(Long idManga, String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
-            String description, String status, Double evaluation, LocalDate releaseDate, LocalDate lastUpdate,
-            Author author, Set<Genre> genres, Set<Chapter> chapters) {
+            String description, String status, Double evaluation, Integer volumeQuantity, 
+            LocalDate releaseDate, LocalDate lastUpdate, Author author, Set<Genre> genres, Set<Chapter> chapters) {
         this.idManga = idManga;
         this.mainTitle = mainTitle;
         this.alternativeTitle = alternativeTitle;
@@ -81,6 +86,7 @@ public class Manga {
         this.description = description;
         this.status = status;
         this.evaluation = evaluation;
+        this.volumeQuantity = volumeQuantity;
         this.releaseDate = releaseDate;
         this.lastUpdate = lastUpdate;
         this.author = author;
@@ -150,6 +156,14 @@ public class Manga {
 
     public void setEvaluation(Double evaluation) {
         this.evaluation = evaluation;
+    }
+
+    public Integer getVolumeQuantity() {
+        return volumeQuantity;
+    }
+
+    public void setVolumeQuantity(Integer volumeQuantity) {
+        this.volumeQuantity = volumeQuantity;
     }
 
     public LocalDate getReleaseDate() {

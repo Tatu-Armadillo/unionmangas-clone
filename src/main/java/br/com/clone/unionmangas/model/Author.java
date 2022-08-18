@@ -17,14 +17,14 @@ public class Author {
     private String name;
 
     @Column(name = "age")
-    private Long age;
+    private Integer age;
 
     @Column(name = "birthdate")
     private LocalDate birthdate;
 
     public Author() { }
 
-    public Author(Long idAuthor, String name, Long age, LocalDate birthdate) {
+    public Author(Long idAuthor, String name, Integer age, LocalDate birthdate) {
         this.idAuthor = idAuthor;
         this.name = name;
         this.age = age;
@@ -47,11 +47,11 @@ public class Author {
         this.name = name;
     }
 
-    public Long getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(Long age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

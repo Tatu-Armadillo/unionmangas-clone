@@ -36,10 +36,10 @@ public class AuthorService {
         return response;
     }
 
-    private Long calcAge(LocalDate birthdate) {
+    private Integer calcAge(LocalDate birthdate) {
         final var currentDate = LocalDate.now();
         final Period period = Period.between(birthdate, currentDate);
-        Long age = Long.parseLong(period.getYears() + "");
+        Integer age = period.getYears();
         return age;
     }
 

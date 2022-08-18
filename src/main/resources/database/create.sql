@@ -9,9 +9,10 @@ create table manga (
     alternatives_title varchar(250),
     link_image varchar(500),
     blob_image mediumblob,
+    volume_quantity int default 0 ,
     description varchar(250) not null,
     status varchar(10) not null,
-    evaluation decimal(4,2) not null,
+    evaluation decimal(4,2) default 0.0,
     release_date date not null,
     last_update date not null,
     author bigint not null
@@ -21,7 +22,7 @@ drop table if exists author;
 create table author ( 
     id_author bigint primary key auto_increment,
     name varchar(100) not null unique,
-    age bigint not null,
+    age int not null,
     birthdate date not null    
 ); 
 
