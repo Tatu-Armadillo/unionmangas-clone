@@ -22,6 +22,6 @@ Run the file to create the database
 `create.sql`
 
 ````
-insert genres in database
+Insert data into 'genre' table
 ````
 `insertgenres.sql`
