@@ -2,6 +2,8 @@ package br.com.clone.unionmangas.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ public class ChapterController {
         return ResponseEntity.ok(response);
     }
 
+    @Transactional
     @PostMapping("/{idManga}")
     public ResponseEntity<List<Chapter>> insertChapters(@PathVariable final Long idManga,
             @RequestBody final Chapter chapter) {

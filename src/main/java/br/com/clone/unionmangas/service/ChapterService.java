@@ -27,13 +27,13 @@ public class ChapterService {
 
     public List<Chapter> insertChapters(Long idManga, Chapter chapter) {
         final var manga = this.mangaService.findById(idManga);
-        manga.setVolumeQuantity(chapter.getNumberVolume());
-
-        chapter.setManga(manga);
-        chapter.setReleaseDate(LocalDate.now());
-
+        
         this.checkExistenceChapter(manga, chapter);
-
+        
+        chapter.setReleaseDate(LocalDate.now());
+        this.mangaService.updateReleaseDateAndVolumeQuantity(manga, chapter);
+        
+        chapter.setManga(manga);
         this.chapterRepository.save(chapter);
 
         final var response = this.findChaptersByManga(idManga);

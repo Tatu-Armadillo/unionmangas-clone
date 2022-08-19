@@ -10,7 +10,7 @@ create table manga (
     link_image varchar(500),
     blob_image mediumblob,
     volume_quantity int default 0 ,
-    description varchar(250) not null,
+    description varchar(1000) not null,
     status varchar(10) not null,
     rating decimal(4,2) default 0.0,
     release_date date not null,

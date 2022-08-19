@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +30,11 @@ public class MangaService {
         List<Manga> ordination = mangas.stream().collect(Collectors.toList());
         ordination.sort(Comparator.comparing(a -> a.getMainTitle()));
         return ordination;
+    }
+
+    public Page<Manga> releaseWeek(final Pageable pageable) {
+        Page<Manga> mangas = this.mangaRepository.findAll(pageable);
+        return mangas;
     }
 
     public Manga findById(final Long idManga) {
@@ -83,6 +90,11 @@ public class MangaService {
         } catch (Exception e) {
             throw new NegocioException("Update cover error");
         }
+    }
+
+    public void updateReleaseDateAndVolumeQuantity(Manga manga, Chapter chapter) {
+        manga.setVolumeQuantity(chapter.getNumberVolume());
+        manga.setLastUpdate(chapter.getReleaseDate());
     }
 
     private void setReturnAuthor(Manga mangaDb, Author author) {
