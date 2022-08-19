@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "author")
 public class Author {
@@ -26,6 +28,7 @@ public class Author {
     @Column(name = "birthdate")
     private LocalDate birthdate;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "manga_author", joinColumns = @JoinColumn(name = "author"), inverseJoinColumns = @JoinColumn(name = "manga"))
     private Set<Manga> mangas;
