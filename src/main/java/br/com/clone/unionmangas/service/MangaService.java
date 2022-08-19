@@ -44,8 +44,8 @@ public class MangaService {
     }
 
     public Manga create(final Manga manga) {
-        // var author = this.authorService.create(manga.getAuthor());
-        // manga.setAuthor(author);
+        var authors = this.createAuthor(manga.getAuthors());
+        manga.setAuthors(authors);
 
         Set<Genre> genres = this.genreService.checkGenres(manga.getGenres());
         manga.setGenres(genres);
@@ -72,7 +72,7 @@ public class MangaService {
         mangaDb.setLinkImage(manga.getLinkImage());
         mangaDb.setGenres(manga.getGenres());
 
-        // this.setReturnAuthor(mangaDb, manga.getAuthor());
+        this.setReturnAuthor(mangaDb, manga.getAuthors());
         return mangaDb;
     }
 
@@ -97,8 +97,22 @@ public class MangaService {
         manga.setLastUpdate(chapter.getReleaseDate());
     }
 
-    private void setReturnAuthor(Manga mangaDb, Author author) {
-        var authorDb = this.authorService.findByName(author.getName());
-        // mangaDb.setAuthor(authorDb);
+    private void setReturnAuthor(Manga mangaDb, Set<Author> authors) {
+        final var response = new HashSet<Author>();
+        authors.forEach(a -> {
+            var author = this.authorService.findByName(a.getName());
+            response.add(author);
+        });
+        mangaDb.setAuthors(response);
     }
+
+    private Set<Author> createAuthor(Set<Author> authors) {
+        final var response = new HashSet<Author>();
+        authors.forEach(a -> {
+            var author = this.authorService.create(a);
+            response.add(author);
+        });
+        return response;
+    }
+
 }

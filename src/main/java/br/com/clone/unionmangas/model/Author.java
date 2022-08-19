@@ -17,6 +17,9 @@ public class Author {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "pseudonym")
+    private String pseudonym;
+
     @Column(name = "age")
     private Integer age;
 
@@ -52,6 +55,14 @@ public class Author {
         this.name = name;
     }
 
+    public String getPseudonym() {
+        return pseudonym;
+    }
+
+    public void setPseudonym(String pseudonym) {
+        this.pseudonym = pseudonym;
+    }
+
     public Integer getAge() {
         return age;
     }
@@ -68,12 +79,12 @@ public class Author {
         this.birthdate = birthdate;
     }
 
-    public Set<Manga> getManga() {
+    public Set<Manga> getMangas() {
         return mangas;
     }
 
-    public void setManga(Set<Manga> manga) {
-        this.mangas = manga;
+    public void setMangas(Set<Manga> mangas) {
+        this.mangas = mangas;
     }
 
 }

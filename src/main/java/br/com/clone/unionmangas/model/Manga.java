@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "manga")
 public class Manga {
@@ -45,13 +47,14 @@ public class Manga {
     private LocalDate lastUpdate;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "manga_genre", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "author"))
+    @JoinTable(name = "manga_author", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "author"))
     private Set<Author> authors;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "manga_author", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
+    @JoinTable(name = "manga_genre ", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
     private Set<Genre> genres;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "manga")
     private  Set<Chapter> chapters;
 
@@ -181,12 +184,12 @@ public class Manga {
         this.lastUpdate = lastUpdate;
     }
 
-    public Set<Author> getAuthor() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthor(Set<Author> author) {
-        this.authors = author;
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
     }
 
     public Set<Genre> getGenres() {

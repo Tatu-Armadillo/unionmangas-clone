@@ -21,6 +21,7 @@ drop table if exists author;
 create table author ( 
     id_author bigint primary key auto_increment,
     name varchar(100) not null unique,
+    pseudonym varchar(100) not null,
     age int not null,
     birthdate date not null    
 ); 
