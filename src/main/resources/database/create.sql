@@ -14,8 +14,7 @@ create table manga (
     status varchar(10) not null,
     rating decimal(4,2) default 0.0,
     release_date date not null,
-    last_update date not null,
-    author bigint not null
+    last_update date not null
 );
 
 drop table if exists author;
@@ -53,9 +52,17 @@ create table manga_genre (
     genre bigint not null
 );
 
-alter table manga add constraint fk_manga_author foreign key (author) references author (id_author);
+drop table if exists manga_author;
+create table manga_author (
+    id_manga_author bigint primary key auto_increment,
+    manga bigint not null,
+    author bigint not null
+);
 
 alter table chapter add constraint fk_chapter_manga foreign key (manga) references manga (id_manga);
 
 alter table manga_genre add constraint fk_manga_genre_manga foreign key (manga) references manga (id_manga);
 alter table manga_genre add constraint fk_manga_genre_genre foreign key (genre) references genre (id_genre);
+
+alter table manga_author add constraint fk_manga_author_manga foreign key (manga) references manga (id_manga);
+alter table manga_author add constraint fk_manga_author_author foreign key (author) references author (id_author);

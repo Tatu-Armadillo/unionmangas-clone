@@ -44,8 +44,8 @@ public class MangaService {
     }
 
     public Manga create(final Manga manga) {
-        var author = this.authorService.create(manga.getAuthor());
-        manga.setAuthor(author);
+        // var author = this.authorService.create(manga.getAuthor());
+        // manga.setAuthor(author);
 
         Set<Genre> genres = this.genreService.checkGenres(manga.getGenres());
         manga.setGenres(genres);
@@ -72,7 +72,7 @@ public class MangaService {
         mangaDb.setLinkImage(manga.getLinkImage());
         mangaDb.setGenres(manga.getGenres());
 
-        this.setReturnAuthor(mangaDb, manga.getAuthor());
+        // this.setReturnAuthor(mangaDb, manga.getAuthor());
         return mangaDb;
     }
 
@@ -99,6 +99,6 @@ public class MangaService {
 
     private void setReturnAuthor(Manga mangaDb, Author author) {
         var authorDb = this.authorService.findByName(author.getName());
-        mangaDb.setAuthor(authorDb);
+        // mangaDb.setAuthor(authorDb);
     }
 }

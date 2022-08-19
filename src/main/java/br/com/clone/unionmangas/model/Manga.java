@@ -44,23 +44,22 @@ public class Manga {
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "author", foreignKey = @ForeignKey(name = "fk_manga_author"))
-    private Author author;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "manga_genre", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "author"))
+    private Set<Author> authors;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "manga_genre", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
-    Set<Genre> genres;
+    @JoinTable(name = "manga_author", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
+    private Set<Genre> genres;
 
     @OneToMany(mappedBy = "manga")
-    Set<Chapter> chapters;
+    private  Set<Chapter> chapters;
 
-    public Manga() {
-    }
+    public Manga() { }
 
     public Manga(String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
             String description, String status, Double rating, Integer volumeQuantity,
-            LocalDate releaseDate, LocalDate lastUpdate, Author author, Set<Genre> genres) {
+            LocalDate releaseDate, LocalDate lastUpdate, Set<Author> authors, Set<Genre> genres) {
         this.mainTitle = mainTitle;
         this.alternativeTitle = alternativeTitle;
         this.linkImage = linkImage;
@@ -71,13 +70,13 @@ public class Manga {
         this.volumeQuantity = volumeQuantity;
         this.releaseDate = releaseDate;
         this.lastUpdate = lastUpdate;
-        this.author = author;
+        this.authors = authors;
         this.genres = genres;
     }
 
     public Manga(Long idManga, String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
-            String description, String status, Double rating, Integer volumeQuantity, 
-            LocalDate releaseDate, LocalDate lastUpdate, Author author, Set<Genre> genres, Set<Chapter> chapters) {
+            String description, String status, Double rating, Integer volumeQuantity,
+            LocalDate releaseDate, LocalDate lastUpdate, Set<Author> authors, Set<Genre> genres, Set<Chapter> chapters) {
         this.idManga = idManga;
         this.mainTitle = mainTitle;
         this.alternativeTitle = alternativeTitle;
@@ -89,7 +88,7 @@ public class Manga {
         this.volumeQuantity = volumeQuantity;
         this.releaseDate = releaseDate;
         this.lastUpdate = lastUpdate;
-        this.author = author;
+        this.authors = authors;
         this.genres = genres;
         this.chapters = chapters;
     }
@@ -182,12 +181,12 @@ public class Manga {
         this.lastUpdate = lastUpdate;
     }
 
-    public Author getAuthor() {
-        return author;
+    public Set<Author> getAuthor() {
+        return authors;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthor(Set<Author> author) {
+        this.authors = author;
     }
 
     public Set<Genre> getGenres() {

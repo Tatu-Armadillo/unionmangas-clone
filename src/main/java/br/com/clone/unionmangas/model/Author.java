@@ -1,6 +1,7 @@
 package br.com.clone.unionmangas.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -21,6 +22,10 @@ public class Author {
 
     @Column(name = "birthdate")
     private LocalDate birthdate;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "manga_author", joinColumns = @JoinColumn(name = "author"), inverseJoinColumns = @JoinColumn(name = "manga"))
+    private Set<Manga> mangas;
 
     public Author() { }
 
@@ -61,6 +66,14 @@ public class Author {
 
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public Set<Manga> getManga() {
+        return mangas;
+    }
+
+    public void setManga(Set<Manga> manga) {
+        this.mangas = manga;
     }
 
 }
