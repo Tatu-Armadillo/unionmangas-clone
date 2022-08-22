@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.clone.unionmangas.Enum.AgeGroupEnum;
+import br.com.clone.unionmangas.enumerator.AgeGroupEnum;
+
 
 @Entity
 @Table(name = "genre")
