@@ -1,9 +1,10 @@
-package br.com.clone.unionmangas.dto;
+package br.com.clone.unionmangas.dto.manga;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.com.clone.unionmangas.dto.ChapterDto;
 import br.com.clone.unionmangas.model.Manga;
 
 public class MangaWeekDto {
@@ -12,14 +13,14 @@ public class MangaWeekDto {
     private String mainTitle;
     private String linkImage;
     private LocalDate lastUpdate;
-    private Set<ChapterDto> chapterDtos;
+    private Set<ChapterDto> chapters;
 
     public MangaWeekDto(Manga manga) {
         this.idManga = manga.getIdManga();
         this.mainTitle = manga.getMainTitle();
         this.linkImage = manga.getLinkImage();
         this.lastUpdate = manga.getLastUpdate();
-        this.chapterDtos = this.chapersToChapterDtos(manga);
+        this.chapters = this.chapersToChapterDtos(manga);
     }
 
     private Set<ChapterDto> chapersToChapterDtos(Manga manga) {
@@ -60,12 +61,12 @@ public class MangaWeekDto {
         this.lastUpdate = lastUpdate;
     }
 
-    public Set<ChapterDto> getChapterDtos() {
-        return chapterDtos;
+    public Set<ChapterDto> getChapters() {
+        return chapters;
     }
 
-    public void setChapterDtos(Set<ChapterDto> chapterDtos) {
-        this.chapterDtos = chapterDtos;
+    public void setChapters(Set<ChapterDto> chapters) {
+        this.chapters = chapters;
     }
 
 }

@@ -1,14 +1,14 @@
 package br.com.clone.unionmangas.service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.clone.unionmangas.dto.MangaWeekDto;
+import br.com.clone.unionmangas.dto.manga.MangaFindDto;
+import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.model.*;
 import br.com.clone.unionmangas.repository.MangaRepository;
@@ -25,11 +25,12 @@ public class MangaService {
     @Autowired
     private GenreService genreService;
 
-    public List<Manga> findAllByName(final String filter) {
+    public List<MangaFindDto> findAllByName(final String filter) {
         Set<Manga> mangas = this.mangaRepository.findByName(filter);
-        List<Manga> ordination = mangas.stream().collect(Collectors.toList());
-        ordination.sort(Comparator.comparing(a -> a.getMainTitle()));
-        return ordination;
+        List<MangaFindDto> mangaWeekDtos = new ArrayList<>();
+        mangas.forEach(m -> mangaWeekDtos.add(new MangaFindDto(m)));
+        mangaWeekDtos.sort(Comparator.comparing(a -> a.getMainTitle()));
+        return mangaWeekDtos;
     }
 
     public List<MangaWeekDto> releaseWeek(final Pageable pageable) {

@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.clone.unionmangas.dto.MangaWeekDto;
+import br.com.clone.unionmangas.dto.manga.MangaFindDto;
+import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.model.Manga;
 import br.com.clone.unionmangas.service.MangaService;
 
@@ -32,7 +33,7 @@ public class MangaController {
     private MangaService mangaService;
 
     @GetMapping
-    public ResponseEntity<List<Manga>> findAllMangas(
+    public ResponseEntity<List<MangaFindDto>> findAllMangas(
             @RequestParam(required = false, defaultValue = "") final String filter) {
         var response = this.mangaService.findAllByName(filter);
         return ResponseEntity.ok(response);
