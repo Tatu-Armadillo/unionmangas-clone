@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.model.Genre;
 import br.com.clone.unionmangas.repository.GenreRepository;
 
@@ -17,10 +18,16 @@ public class GenreService {
 
     public Genre findByName(String name) {
         var respose = this.genreRepository.findByName(name);
+        if (respose == null) {
+            throw new NegocioException("Genre Not Found");
+        }
         return respose;
     }
 
     public Set<Genre> checkGenres(Set<Genre> genres) {
+        if (genres.isEmpty()) {
+            throw new NegocioException("Unselected Genres");
+        }
         Set<Genre> response = new HashSet<>();
         genres.forEach(g -> {
             var genre = this.findByName(g.getName());

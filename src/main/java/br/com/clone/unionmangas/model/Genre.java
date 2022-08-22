@@ -1,6 +1,10 @@
 package br.com.clone.unionmangas.model;
 
+import java.util.Set;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.clone.unionmangas.Enum.AgeGroupEnum;
 
@@ -22,6 +26,11 @@ public class Genre {
     @Column(name = "age_group")
     @Enumerated(EnumType.STRING)
     private AgeGroupEnum ageGroup;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "manga_genre ", joinColumns = @JoinColumn(name = "genre"), inverseJoinColumns = @JoinColumn(name = "manga"))
+    private Set<Manga> genres;
 
     public Genre() { }
 
@@ -69,4 +78,13 @@ public class Genre {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Set<Manga> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Manga> genres) {
+        this.genres = genres;
+    }
+
 }

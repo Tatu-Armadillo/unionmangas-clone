@@ -44,9 +44,9 @@ public class MangaController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/rating")
+    @GetMapping("/week")
     public ResponseEntity<Page<Manga>> releaseWeek(
-        @PageableDefault(sort = "lastUpdate", direction = Direction.DESC) Pageable pageable) {
+            @PageableDefault(sort = "lastUpdate", direction = Direction.DESC) Pageable pageable) {
         var response = this.mangaService.releaseWeek(pageable);
         return ResponseEntity.ok(response);
     }
