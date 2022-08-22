@@ -5,7 +5,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.clone.unionmangas.dto.MangaWeekDto;
 import br.com.clone.unionmangas.model.Manga;
 import br.com.clone.unionmangas.service.MangaService;
 
@@ -45,7 +45,7 @@ public class MangaController {
     }
 
     @GetMapping("/week")
-    public ResponseEntity<Page<Manga>> releaseWeek(
+    public ResponseEntity<List<MangaWeekDto>> releaseWeek(
             @PageableDefault(sort = "lastUpdate", direction = Direction.DESC) Pageable pageable) {
         var response = this.mangaService.releaseWeek(pageable);
         return ResponseEntity.ok(response);

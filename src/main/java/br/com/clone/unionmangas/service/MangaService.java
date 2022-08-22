@@ -4,11 +4,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.clone.unionmangas.dto.MangaWeekDto;
 import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.model.*;
 import br.com.clone.unionmangas.repository.MangaRepository;
@@ -32,9 +32,12 @@ public class MangaService {
         return ordination;
     }
 
-    public Page<Manga> releaseWeek(final Pageable pageable) {
-        Page<Manga> mangas = this.mangaRepository.findAll(pageable);
-        return mangas;
+    public List<MangaWeekDto> releaseWeek(final Pageable pageable) {
+        List<Manga> mangas = this.mangaRepository.findAll();
+        List<MangaWeekDto> mangaWeekDtos = new ArrayList<>();
+        mangas.forEach(m -> mangaWeekDtos.add(new MangaWeekDto(m)));
+        mangaWeekDtos.sort(Comparator.comparing(a -> a.getMainTitle()));
+        return mangaWeekDtos;
     }
 
     public Manga findById(final Long idManga) {
