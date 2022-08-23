@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.clone.unionmangas.model.Author;
 import br.com.clone.unionmangas.service.AuthorService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/author")
@@ -23,20 +25,24 @@ public class AuthorController {
     private AuthorService authorService;
 
     @GetMapping
-    public ResponseEntity<Author> findByName(@RequestParam(required = true) final String name) {
+    @ApiOperation("Endpoint responsible for searching author by name or pseudonym")
+    public ResponseEntity<Author> findByName(
+            @ApiParam(name = "name") @RequestParam(required = true) final String name) {
         var response = this.authorService.findByName(name);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{idAuthor}")
-    public ResponseEntity<Author> findById(@PathVariable final Long idAuthor) {
+    @ApiOperation("Endpoint responsible for searching the author by id")
+    public ResponseEntity<Author> findById(@ApiParam(name = "idAuthor") @PathVariable final Long idAuthor) {
         var response = this.authorService.findById(idAuthor);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Author> createAuthor(@RequestBody final Author author) {
+    @ApiOperation("Endpoint responsible for creating an author")
+    public ResponseEntity<Author> createAuthor(@ApiParam(name = "idAuthor") @RequestBody final Author author) {
         var response = this.authorService.create(author);
         return ResponseEntity.ok(response);
     }

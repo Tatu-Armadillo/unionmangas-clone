@@ -23,6 +23,9 @@ import br.com.clone.unionmangas.dto.manga.MangaFindDto;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.model.Manga;
 import br.com.clone.unionmangas.service.MangaService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/mangas")
@@ -32,51 +35,61 @@ public class MangaController {
     private MangaService mangaService;
 
     @GetMapping
+    @ApiOperation("endpoint responsible for fetching mangos by main and alias name")
     public ResponseEntity<Page<MangaFindDto>> findAllMangas(
-            @PageableDefault(sort = "mainTitle", direction = Direction.DESC) Pageable pageable,
-            @RequestParam(required = false, defaultValue = "") final String filter) {
+            @ApiIgnore @PageableDefault(sort = "mainTitle", direction = Direction.DESC) Pageable pageable,
+            @ApiParam(name = "filter") @RequestParam(required = false, defaultValue = "") final String filter) {
         var response = this.mangaService.findAllByName(filter, pageable);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{idManga}")
-    public ResponseEntity<Manga> findById(@PathVariable final Long idManga) {
+    @ApiOperation("Endpoint responsible for searching the manga by id")
+    public ResponseEntity<Manga> findById(@ApiParam(name = "idManga") @PathVariable final Long idManga) {
         var response = this.mangaService.findById(idManga);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/week")
+    @ApiOperation("Endpoint responsible for returning the mangas updated in the week")
     public ResponseEntity<Page<MangaWeekDto>> releaseWeek(
-            @PageableDefault(sort = "lastUpdate", direction = Direction.DESC) Pageable pageable) {
+            @ApiIgnore @PageableDefault(sort = "lastUpdate", direction = Direction.DESC) Pageable pageable) {
         var response = this.mangaService.releaseWeek(pageable);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Manga> createManga(@RequestBody final Manga manga) {
+    @ApiOperation("Endpoint responsible for creating a new manga with author and genres")
+    public ResponseEntity<Manga> createManga(@ApiParam(name = "manga") @RequestBody final Manga manga) {
         var respose = this.mangaService.create(manga);
         return ResponseEntity.ok(respose);
     }
 
     @PutMapping("/{idManga}")
     @Transactional
-    public ResponseEntity<Manga> updateManga(@PathVariable final Long idManga, @RequestBody final Manga manga) {
+    @ApiOperation("Endpoint responsible for changing the existing sleeve in the system")
+    public ResponseEntity<Manga> updateManga(
+            @ApiParam(name = "idManga") @PathVariable final Long idManga,
+            @ApiParam(name = "manga") @RequestBody final Manga manga) {
         var respose = this.mangaService.update(idManga, manga);
         return ResponseEntity.ok(respose);
     }
 
     @PutMapping("/image/{idManga}")
     @Transactional
-    public ResponseEntity<?> updateImageManga(@PathVariable final Long idManga,
-            @RequestParam final MultipartFile image) {
+    @ApiOperation("Endpoint responsible for inserting chapter cover in the system")
+    public ResponseEntity<?> updateImageManga(
+            @ApiParam(name = "idManga") @PathVariable final Long idManga,
+            @ApiParam(name = "image") @RequestParam final MultipartFile image) {
         this.mangaService.updateCover(idManga, image);
         return ResponseEntity.ok("OK");
     }
 
     @DeleteMapping("/{idManga}")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable final Long idManga) {
+    @ApiOperation("Endpoint responsible for deleting mango from the system")
+    public ResponseEntity<?> delete(@ApiParam(name = "idManga") @PathVariable final Long idManga) {
         var response = this.mangaService.delete(idManga);
         return ResponseEntity.ok(response);
     }

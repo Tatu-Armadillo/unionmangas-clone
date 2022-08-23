@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.clone.unionmangas.model.Chapter;
 import br.com.clone.unionmangas.service.ChapterService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/chapters")
@@ -24,15 +26,19 @@ public class ChapterController {
     private ChapterService chapterService;
 
     @GetMapping("/{idManga}")
-    public ResponseEntity<List<Chapter>> findChaptersByManga(@PathVariable Long idManga) {
+    @ApiOperation("Endpoint responsible for fetching the pages inside the manga")
+    public ResponseEntity<List<Chapter>> findChaptersByManga(
+            @ApiParam(name = "idManga") @PathVariable Long idManga) {
         final var response = this.chapterService.findChaptersByManga(idManga);
         return ResponseEntity.ok(response);
     }
 
     @Transactional
     @PostMapping("/{idManga}")
-    public ResponseEntity<List<Chapter>> insertChapters(@PathVariable final Long idManga,
-            @RequestBody final Chapter chapter) {
+    @ApiOperation("Endpoint responsible for adding pages to manga")
+    public ResponseEntity<List<Chapter>> insertChapters(
+        @ApiParam(name = "idManga") @PathVariable final Long idManga,
+        @ApiParam(name = "chapter") @RequestBody final Chapter chapter) {
         final var response = this.chapterService.insertChapters(idManga, chapter);
         return ResponseEntity.ok(response);
     }
