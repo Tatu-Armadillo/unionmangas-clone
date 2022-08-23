@@ -31,9 +31,9 @@ public class MangaController {
     @Autowired
     private MangaService mangaService;
 
-    @GetMapping // TODO TORNAR PAGINADO
+    @GetMapping
     public ResponseEntity<Page<MangaFindDto>> findAllMangas(
-            @PageableDefault(sort = "mainTitle", direction = Direction.DESC)Pageable pageable,
+            @PageableDefault(sort = "mainTitle", direction = Direction.DESC) Pageable pageable,
             @RequestParam(required = false, defaultValue = "") final String filter) {
         var response = this.mangaService.findAllByName(filter, pageable);
         return ResponseEntity.ok(response);
@@ -45,7 +45,7 @@ public class MangaController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/week") // TODO TORNAR PAGINADO
+    @GetMapping("/week")
     public ResponseEntity<Page<MangaWeekDto>> releaseWeek(
             @PageableDefault(sort = "lastUpdate", direction = Direction.DESC) Pageable pageable) {
         var response = this.mangaService.releaseWeek(pageable);
