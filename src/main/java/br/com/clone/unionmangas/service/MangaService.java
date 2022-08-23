@@ -3,6 +3,7 @@ package br.com.clone.unionmangas.service;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,19 +26,13 @@ public class MangaService {
     @Autowired
     private GenreService genreService;
 
-    public List<MangaFindDto> findAllByName(final String filter) {
-        Set<Manga> mangas = this.mangaRepository.findByName(filter);
-        List<MangaFindDto> mangaWeekDtos = new ArrayList<>();
-        mangas.forEach(m -> mangaWeekDtos.add(new MangaFindDto(m)));
-        mangaWeekDtos.sort(Comparator.comparing(a -> a.getMainTitle()));
+    public Page<MangaFindDto> findAllByName(final String filter, final Pageable pageable) {
+        Page<MangaFindDto> mangaWeekDtos = this.mangaRepository.findByName(pageable, filter);
         return mangaWeekDtos;
     }
 
-    public List<MangaWeekDto> releaseWeek(final Pageable pageable) {
-        List<Manga> mangas = this.mangaRepository.findAll();
-        List<MangaWeekDto> mangaWeekDtos = new ArrayList<>();
-        mangas.forEach(m -> mangaWeekDtos.add(new MangaWeekDto(m)));
-        mangaWeekDtos.sort(Comparator.comparing(a -> a.getMainTitle()));
+    public Page<MangaWeekDto> releaseWeek(final Pageable pageable) {
+        Page<MangaWeekDto> mangaWeekDtos = this.mangaRepository.findAllByWeek(pageable);
         return mangaWeekDtos;
     }
 

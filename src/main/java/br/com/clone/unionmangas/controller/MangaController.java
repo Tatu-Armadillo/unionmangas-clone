@@ -1,10 +1,9 @@
 package br.com.clone.unionmangas.controller;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -32,10 +31,11 @@ public class MangaController {
     @Autowired
     private MangaService mangaService;
 
-    @GetMapping
-    public ResponseEntity<List<MangaFindDto>> findAllMangas(
+    @GetMapping // TODO TORNAR PAGINADO
+    public ResponseEntity<Page<MangaFindDto>> findAllMangas(
+            @PageableDefault(sort = "mainTitle", direction = Direction.DESC)Pageable pageable,
             @RequestParam(required = false, defaultValue = "") final String filter) {
-        var response = this.mangaService.findAllByName(filter);
+        var response = this.mangaService.findAllByName(filter, pageable);
         return ResponseEntity.ok(response);
     }
 
@@ -45,8 +45,8 @@ public class MangaController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/week")
-    public ResponseEntity<List<MangaWeekDto>> releaseWeek(
+    @GetMapping("/week") // TODO TORNAR PAGINADO
+    public ResponseEntity<Page<MangaWeekDto>> releaseWeek(
             @PageableDefault(sort = "lastUpdate", direction = Direction.DESC) Pageable pageable) {
         var response = this.mangaService.releaseWeek(pageable);
         return ResponseEntity.ok(response);
