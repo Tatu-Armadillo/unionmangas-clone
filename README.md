@@ -25,3 +25,7 @@ Run the file to create the database
 Insert data into 'genre' table
 ````
 `insertgenres.sql`
+# Swagger Documentation Path 
+````
+/unionmangas/swagger-ui.html
+````

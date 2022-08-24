@@ -38,7 +38,7 @@ public class MangaService {
 
     public Manga findById(final Long idManga) {
         Manga manga = this.mangaRepository.findById(idManga)
-                .orElseThrow(() -> new NegocioException("Titulo indisponivel"));
+                .orElseThrow(() -> new NegocioException("Unavailable Title"));
         return manga;
     }
 
