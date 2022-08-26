@@ -1,6 +1,7 @@
 package br.com.clone.unionmangas.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class GenreService {
         if (respose == null) {
             throw new NegocioException("Genre Not Found");
         }
+        return respose;
+    }
+
+    public List<Genre> findAllByName(String name) {
+        var respose = this.genreRepository.findAllByName(name);
         return respose;
     }
 
