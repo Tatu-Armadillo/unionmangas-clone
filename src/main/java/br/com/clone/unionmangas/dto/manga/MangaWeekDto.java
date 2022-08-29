@@ -15,6 +15,8 @@ public class MangaWeekDto {
     private LocalDate lastUpdate;
     private Set<ChapterDto> chapters;
 
+    public MangaWeekDto() {}
+
     public MangaWeekDto(Manga manga) {
         this.idManga = manga.getIdManga();
         this.mainTitle = manga.getMainTitle();

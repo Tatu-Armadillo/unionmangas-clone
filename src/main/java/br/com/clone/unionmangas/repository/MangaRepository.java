@@ -20,6 +20,6 @@ public interface MangaRepository extends JpaRepository<Manga, Long> {
 
     @Query("SELECT new br.com.clone.unionmangas.dto.manga.MangaWeekDto(manga) FROM Manga manga "
             + "WHERE WEEK(manga.lastUpdate) = WEEK(CURDATE())")
-    Page<MangaWeekDto> findAllByWeek(Pageable page);
+    Page<MangaWeekDto> releseWeek(Pageable page);
 
 }

@@ -13,6 +13,8 @@ public class MangaFindDto {
     private String linkImage;
     private Set<GenreDto> genres;
 
+    public MangaFindDto() { }
+
     public MangaFindDto(Manga manga) {
         this.idManga = manga.getIdManga();
         this.mainTitle = manga.getMainTitle();

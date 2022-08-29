@@ -32,7 +32,7 @@ public class MangaService {
     }
 
     public Page<MangaWeekDto> releaseWeek(final Pageable pageable) {
-        Page<MangaWeekDto> mangaWeekDtos = this.mangaRepository.findAllByWeek(pageable);
+        Page<MangaWeekDto> mangaWeekDtos = this.mangaRepository.releseWeek(pageable);
         return mangaWeekDtos;
     }
 
