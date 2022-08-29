@@ -7,6 +7,8 @@ public class ChapterDto {
     private Long idChapter;
     private Integer numberChapter;
 
+    public ChapterDto() { }
+
     public ChapterDto(Chapter chapter) {
         this.idChapter = chapter.getIdChapter();
         this.numberChapter = chapter.getNumberChapter();

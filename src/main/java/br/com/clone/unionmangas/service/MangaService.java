@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.clone.unionmangas.dto.manga.MangaFindDto;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.exception.NegocioException;
+import br.com.clone.unionmangas.mapper.DozerMapper;
 import br.com.clone.unionmangas.model.*;
 import br.com.clone.unionmangas.repository.MangaRepository;
 
@@ -32,7 +33,8 @@ public class MangaService {
     }
 
     public Page<MangaWeekDto> releaseWeek(final Pageable pageable) {
-        Page<MangaWeekDto> mangaWeekDtos = this.mangaRepository.releseWeek(pageable);
+        Page<Manga> mangas = this.mangaRepository.releseWeek(pageable);
+        Page<MangaWeekDto> mangaWeekDtos = mangas.map(m -> DozerMapper.parseObject(m, MangaWeekDto.class));
         return mangaWeekDtos;
     }
 

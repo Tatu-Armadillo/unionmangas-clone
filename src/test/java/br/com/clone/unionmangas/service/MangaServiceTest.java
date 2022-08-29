@@ -12,6 +12,7 @@ import org.springframework.data.domain.*;
 
 import br.com.clone.unionmangas.UnionmangasApplication;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
+import br.com.clone.unionmangas.model.Manga;
 import br.com.clone.unionmangas.repository.MangaRepository;
 
 @SpringBootTest(classes = UnionmangasApplication.class)
@@ -28,11 +29,11 @@ public class MangaServiceTest {
 
     @BeforeEach
     void setUp() {
-        List<MangaWeekDto> mangasArray = new ArrayList<>();
-        mangasArray.add(new MangaWeekDto());
-        mangasArray.add(new MangaWeekDto());
+        List<Manga> mangasArray = new ArrayList<>();
+        mangasArray.add(new Manga());
+        mangasArray.add(new Manga());
 
-        Page<MangaWeekDto> mangas = new PageImpl<>(mangasArray);
+        Page<Manga> mangas = new PageImpl<>(mangasArray);
         Mockito.when(mangaRepository.releseWeek(pageable)).thenReturn(mangas);
     }
 

@@ -1,0 +1,75 @@
+package br.com.clone.unionmangas.mock;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import br.com.clone.unionmangas.dto.ChapterDto;
+import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
+import br.com.clone.unionmangas.enumerator.AgeGroupEnum;
+import br.com.clone.unionmangas.model.Author;
+import br.com.clone.unionmangas.model.Chapter;
+import br.com.clone.unionmangas.model.Genre;
+import br.com.clone.unionmangas.model.Manga;
+
+public class MockManga {
+
+    private LocalDate data = LocalDate.now();
+
+    public List<Manga> mockMangaList() {
+        List<Manga> mangas = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            mangas.add(mockManga(i));
+        }
+        return mangas;
+    }
+    
+    public List<MangaWeekDto> mockMangaWeekDtoList() {
+        List<MangaWeekDto> mangas = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            mangas.add(mangaWeekVO(i));
+        }
+        return mangas;
+    }
+
+    public Manga mockManga(Integer number) {
+        Manga manga = new Manga();
+        manga.setMainTitle("mainTitle" + number);
+        manga.setAlternativeTitle("alternativeTitle" + number);
+        manga.setLinkImage("linkImage" + number);
+        manga.setBlobImage(new byte[number]);
+        manga.setDescription("description" + number);
+        manga.setStatus("status" + number);
+        manga.setRating(number.doubleValue());
+        manga.setVolumeQuantity(number);
+        manga.setReleaseDate(data);
+        manga.setLastUpdate(data);
+
+        Author author = new Author(number.longValue(), "author teste" + number, number, data);
+        manga.setAuthors(Set.of(author));
+
+        Genre genre = new Genre(number.longValue(), "genre teste" + number, AgeGroupEnum.LIVRE, "description" + number);
+        manga.setGenres(Set.of(genre));
+
+        Chapter chapter = new Chapter(number.longValue(), number, number, number, data, "linkChapter" + number, new Byte[number]);
+        manga.setChapters(Set.of(chapter));
+
+        return manga;
+    }
+
+    public MangaWeekDto mangaWeekVO(Integer number) {
+        MangaWeekDto manga = new MangaWeekDto();
+        manga.setMainTitle("mainTitle" + number);
+        manga.setLinkImage("linkImage" + number);
+        manga.setLastUpdate(data);
+
+        ChapterDto chapter = new ChapterDto();
+        chapter.setIdChapter(number.longValue());
+        chapter.setNumberChapter(number);
+        manga.setChapters(Set.of(chapter));
+
+        return manga;
+    }
+
+}

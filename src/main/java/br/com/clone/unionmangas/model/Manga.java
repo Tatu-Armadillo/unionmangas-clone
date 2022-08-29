@@ -56,7 +56,7 @@ public class Manga {
 
     @JsonIgnore
     @OneToMany(mappedBy = "manga")
-    private  Set<Chapter> chapters;
+    private Set<Chapter> chapters;
 
     public Manga() { }
 

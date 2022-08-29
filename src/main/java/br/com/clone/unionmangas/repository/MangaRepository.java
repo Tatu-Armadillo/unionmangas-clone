@@ -18,8 +18,8 @@ public interface MangaRepository extends JpaRepository<Manga, Long> {
             + " OR manga.alternativeTitle LIKE CONCAT('%', :filter, '%')")
     Page<MangaFindDto> findByName(Pageable pageable, @Param("filter") String filter);
 
-    @Query("SELECT new br.com.clone.unionmangas.dto.manga.MangaWeekDto(manga) FROM Manga manga "
+    @Query("SELECT manga FROM Manga manga "
             + "WHERE WEEK(manga.lastUpdate) = WEEK(CURDATE())")
-    Page<MangaWeekDto> releseWeek(Pageable page);
+    Page<Manga> releseWeek(Pageable page);
 
 }

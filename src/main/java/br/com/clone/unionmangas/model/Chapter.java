@@ -43,6 +43,16 @@ public class Chapter {
     }
 
     public Chapter(Long idChapter, Integer numberVolume, Integer numberChapter, Integer numberPages,
+            LocalDate releaseDate, String linkChapter, Byte[] blobChapter) {
+        this.idChapter = idChapter;
+        this.numberVolume = numberVolume;
+        this.numberChapter = numberChapter;
+        this.numberPages = numberPages;
+        this.linkChapter = linkChapter;
+        this.blobChapter = blobChapter;
+    }
+
+    public Chapter(Long idChapter, Integer numberVolume, Integer numberChapter, Integer numberPages,
             LocalDate releaseDate, String linkChapter, Byte[] blobChapter, Manga manga) {
         this.idChapter = idChapter;
         this.numberVolume = numberVolume;
@@ -51,16 +61,6 @@ public class Chapter {
         this.linkChapter = linkChapter;
         this.blobChapter = blobChapter;
         this.manga = manga;
-    }
-
-    public Chapter(Long idChapter, Integer numberVolume, Integer numberChapter, Integer numberPages,
-            LocalDate releaseDate, String linkChapter, Byte[] blobChapter) {
-        this.idChapter = idChapter;
-        this.numberVolume = numberVolume;
-        this.numberChapter = numberChapter;
-        this.numberPages = numberPages;
-        this.linkChapter = linkChapter;
-        this.blobChapter = blobChapter;
     }
 
     public Long getIdChapter() {
