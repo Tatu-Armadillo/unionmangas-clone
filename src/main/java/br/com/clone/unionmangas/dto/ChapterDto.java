@@ -5,12 +5,14 @@ import br.com.clone.unionmangas.model.Chapter;
 public class ChapterDto {
 
     private Long idChapter;
+    private Integer numberVolume;
     private Integer numberChapter;
 
     public ChapterDto() { }
 
     public ChapterDto(Chapter chapter) {
         this.idChapter = chapter.getIdChapter();
+        this.numberVolume = chapter.getNumberVolume();
         this.numberChapter = chapter.getNumberChapter();
     }
 
@@ -20,6 +22,14 @@ public class ChapterDto {
 
     public void setIdChapter(Long idChapter) {
         this.idChapter = idChapter;
+    }
+
+    public Integer getNumberVolume() {
+        return numberVolume;
+    }
+
+    public void setNumberVolume(Integer numberVolume) {
+        this.numberVolume = numberVolume;
     }
 
     public Integer getNumberChapter() {

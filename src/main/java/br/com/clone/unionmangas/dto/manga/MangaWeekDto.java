@@ -13,7 +13,7 @@ public class MangaWeekDto {
     private String mainTitle;
     private String linkImage;
     private LocalDate lastUpdate;
-    private Set<ChapterDto> chapters; // TODO atulizar regra de negocio para selecionar um capitulo com a data mais atualizada
+    private Set<ChapterDto> chapters;
 
     public MangaWeekDto() {}
 
