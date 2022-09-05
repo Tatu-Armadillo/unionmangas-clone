@@ -4,8 +4,11 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.clone.unionmangas.dto.author.AuthorGetDto;
 import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.model.Author;
 import br.com.clone.unionmangas.repository.AuthorRepository;
@@ -16,6 +19,11 @@ public class AuthorService {
     @Autowired
     private AuthorRepository authorRepository;
 
+    public Page<AuthorGetDto> findByName(final Pageable pageable, final String name) {
+        var response = this.authorRepository.findByName(pageable, name).map(AuthorGetDto::of);
+        return response;
+    }
+    
     public Author findByName(final String name) {
         var response = this.authorRepository.findByName(name);
         return response;
@@ -28,11 +36,8 @@ public class AuthorService {
     }
 
     public Author create(final Author author) {
-        var response = this.findByName(author.getName());
-        if (response == null) {
-            author.setAge(this.calcAge(author.getBirthdate()));
-            response = this.authorRepository.save(author);
-        }
+        author.setAge(this.calcAge(author.getBirthdate()));
+        final var response = this.authorRepository.save(author);
         return response;
     }
 
