@@ -111,7 +111,8 @@ public class MangaService {
         final var response = new HashSet<Author>();
         authors.forEach(a -> {
             var author = this.authorService.create(a);
-            response.add(author);
+            var db = this.authorService.findByName(author.getName());
+            response.add(db);
         });
         return response;
     }

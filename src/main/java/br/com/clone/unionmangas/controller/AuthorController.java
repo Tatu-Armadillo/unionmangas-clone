@@ -46,7 +46,7 @@ public class AuthorController {
     @PostMapping
     @Transactional
     @ApiOperation("Endpoint responsible for creating an author")
-    public ResponseEntity<ResponseBase<Author>> createAuthor(@ApiParam(name = "idAuthor") @RequestBody final Author author) {
+    public ResponseEntity<ResponseBase<AuthorGetDto>> createAuthor(@ApiParam(name = "idAuthor") @RequestBody final Author author) {
         final var response = this.authorService.create(author);
         final var base = ResponseBase.of(response);
         return ResponseEntity.ok(base);

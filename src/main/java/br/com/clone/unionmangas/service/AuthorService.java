@@ -22,7 +22,7 @@ public class AuthorService {
     private AuthorRepository authorRepository;
 
     public Page<AuthorGetDto> findByName(final Pageable pageable, final String name) {
-        var response = this.authorRepository.findByName(pageable, name).map(AuthorGetDto::of);
+        final Page<AuthorGetDto> response = this.authorRepository.findByName(pageable, name).map(AuthorGetDto::of);
         response.forEach(r -> r.add(linkTo(methodOn(AuthorController.class).findById(r.getIdAuthor())).withSelfRel()));
         return response;
     }
@@ -41,9 +41,11 @@ public class AuthorService {
         return response;
     }
 
-    public Author create(final Author author) {
+    public AuthorGetDto create(final Author author) {
         author.setAge(this.calcAge(author.getBirthdate()));
-        final var response = this.authorRepository.save(author);
+        final var db = this.authorRepository.save(author);
+        final var response = AuthorGetDto.of(db);
+        response.add(linkTo(methodOn(AuthorController.class).findById(db.getIdAuthor())).withSelfRel());
         return response;
     }
 
