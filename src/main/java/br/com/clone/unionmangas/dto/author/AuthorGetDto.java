@@ -1,21 +1,33 @@
 package br.com.clone.unionmangas.dto.author;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import br.com.clone.unionmangas.model.Author;
 
-public class AuthorGetDto {
+public class AuthorGetDto extends RepresentationModel<AuthorGetDto> {
 
+    private Long idAuthor;
     private String name;
     private String pseudonym;
     private Integer age;
 
-    public AuthorGetDto(String name, String pseudonym, Integer age) {
+    public AuthorGetDto(Long idAuthor, String name, String pseudonym, Integer age) {
+        this.idAuthor = idAuthor;
         this.name = name;
         this.pseudonym = pseudonym;
         this.age = age;
     }
 
     public static AuthorGetDto of(Author author) {
-        return new AuthorGetDto(author.getName(), author.getPseudonym(), author.getAge());
+        return new AuthorGetDto(author.getIdAuthor(), author.getName(), author.getPseudonym(), author.getAge());
+    }
+
+    public Long getIdAuthor() {
+        return idAuthor;
+    }
+
+    public void setIdAuthor(Long idAuthor) {
+        this.idAuthor = idAuthor;
     }
 
     public String getName() {

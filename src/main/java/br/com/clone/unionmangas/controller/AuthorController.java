@@ -41,7 +41,7 @@ public class AuthorController {
 
     @GetMapping("/{idAuthor}")
     @ApiOperation("Endpoint responsible for searching the author by id")
-    public ResponseEntity<Author> findById(@ApiParam(name = "idAuthor") @PathVariable final Long idAuthor) {
+    public ResponseEntity<AuthorGetDto> findById(@ApiParam(name = "idAuthor") @PathVariable final Long idAuthor) {
         var response = this.authorService.findById(idAuthor);
         return ResponseEntity.ok(response);
     }

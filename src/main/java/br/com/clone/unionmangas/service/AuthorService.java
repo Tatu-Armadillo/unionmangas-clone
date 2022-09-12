@@ -1,13 +1,15 @@
 package br.com.clone.unionmangas.service;
 
-import java.time.LocalDate;
-import java.time.Period;
+import java.time.*;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import br.com.clone.unionmangas.controller.AuthorController;
 import br.com.clone.unionmangas.dto.author.AuthorGetDto;
 import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.model.Author;
@@ -21,17 +23,21 @@ public class AuthorService {
 
     public Page<AuthorGetDto> findByName(final Pageable pageable, final String name) {
         var response = this.authorRepository.findByName(pageable, name).map(AuthorGetDto::of);
+        response.forEach(r -> r.add(linkTo(methodOn(AuthorController.class).findById(r.getIdAuthor())).withSelfRel()));
         return response;
     }
-    
+
     public Author findByName(final String name) {
         var response = this.authorRepository.findByName(name);
         return response;
     }
 
-    public Author findById(final Long idAuthor) {
-        var response = this.authorRepository.findById(idAuthor)
+    public AuthorGetDto findById(final Long idAuthor) {
+        final var db = this.authorRepository.findById(idAuthor)
                 .orElseThrow(() -> new NegocioException("Author not found"));
+
+        final var response = AuthorGetDto.of(db);
+        response.add(linkTo(methodOn(AuthorController.class).findById(idAuthor)).withSelfRel());
         return response;
     }
 
