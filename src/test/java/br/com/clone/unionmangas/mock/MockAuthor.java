@@ -27,6 +27,14 @@ public class MockAuthor {
         return author;
     }
 
+    public Author mockAuthor1() {
+        Author author = new Author();
+        author.setName("name" + 1);
+        author.setPseudonym("pseudonym" + 1);
+        author.setBirthdate(LocalDate.now().minusYears(1));
+        return author;
+    }
+
     public List<AuthorGetDto> mockAuthorGetDtoList() {
         List<AuthorGetDto> authors = new ArrayList<>();
         for (Long i = 0L; i < 10L; i++) {
