@@ -35,6 +35,13 @@ public class Author {
 
     public Author() { }
 
+    public Author(String name, String pseudonym, Integer age, LocalDate birthdate) {
+        this.name = name;
+        this.pseudonym = pseudonym;
+        this.age = age;
+        this.birthdate = birthdate;
+    }
+    
     public Author(Long idAuthor, String name, Integer age, LocalDate birthdate) {
         this.idAuthor = idAuthor;
         this.name = name;

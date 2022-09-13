@@ -11,6 +11,8 @@ public class AuthorGetDto extends RepresentationModel<AuthorGetDto> {
     private String pseudonym;
     private Integer age;
 
+    public AuthorGetDto() { }
+
     public AuthorGetDto(Long idAuthor, String name, String pseudonym, Integer age) {
         this.idAuthor = idAuthor;
         this.name = name;

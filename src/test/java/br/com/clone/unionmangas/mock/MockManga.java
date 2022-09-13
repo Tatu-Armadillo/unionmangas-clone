@@ -20,7 +20,7 @@ public class MockManga {
     public List<Manga> mockMangaList() {
         List<Manga> mangas = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            mangas.add(mockManga(i));
+            mangas.add(this.mockManga(i));
         }
         return mangas;
     }
@@ -28,7 +28,7 @@ public class MockManga {
     public List<MangaWeekDto> mockMangaWeekDtoList() {
         List<MangaWeekDto> mangas = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            mangas.add(mangaWeekVO(i));
+            mangas.add(this.mangaWeekVO(i));
         }
         return mangas;
     }

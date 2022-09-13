@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.clone.unionmangas.dto.author.AuthorParamDto;
 import br.com.clone.unionmangas.dto.manga.MangaFindDto;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.exception.NegocioException;
@@ -110,7 +111,7 @@ public class MangaService {
     private Set<Author> createAuthor(Set<Author> authors) {
         final var response = new HashSet<Author>();
         authors.forEach(a -> {
-            var author = this.authorService.create(a);
+            var author = this.authorService.create(AuthorParamDto.of(a));
             var db = this.authorService.findByName(author.getName());
             response.add(db);
         });

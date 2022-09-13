@@ -10,7 +10,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import br.com.clone.unionmangas.controller.AuthorController;
-import br.com.clone.unionmangas.dto.author.AuthorGetDto;
+import br.com.clone.unionmangas.dto.author.*;
 import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.model.Author;
 import br.com.clone.unionmangas.repository.AuthorRepository;
@@ -18,8 +18,12 @@ import br.com.clone.unionmangas.repository.AuthorRepository;
 @Service
 public class AuthorService {
 
+    private final AuthorRepository authorRepository;
+
     @Autowired
-    private AuthorRepository authorRepository;
+    private AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
     public Page<AuthorGetDto> findByName(final Pageable pageable, final String name) {
         final Page<AuthorGetDto> response = this.authorRepository.findByName(pageable, name).map(AuthorGetDto::of);
@@ -41,11 +45,16 @@ public class AuthorService {
         return response;
     }
 
-    public AuthorGetDto create(final Author author) {
-        author.setAge(this.calcAge(author.getBirthdate()));
-        final var db = this.authorRepository.save(author);
-        final var response = AuthorGetDto.of(db);
-        response.add(linkTo(methodOn(AuthorController.class).findById(db.getIdAuthor())).withSelfRel());
+    public AuthorGetDto create(final AuthorParamDto param) {
+        Author author = new Author(
+                param.getName(),
+                param.getPseudonym(),
+                this.calcAge(param.getBirthdate()),
+                param.getBirthdate());
+
+        final var persistence = this.authorRepository.save(author);
+        final var response = AuthorGetDto.of(persistence);
+        response.add(linkTo(methodOn(AuthorController.class).findById(persistence.getIdAuthor())).withSelfRel());
         return response;
     }
 

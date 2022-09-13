@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
-import br.com.clone.unionmangas.UnionmangasApplication;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.model.Manga;
 import br.com.clone.unionmangas.repository.MangaRepository;
 
-@SpringBootTest(classes = UnionmangasApplication.class)
-public class MangaServiceTest {
+@Tags({ @Tag("unit"), @Tag("manga") })
+@DisplayName("Testes da regra de negocio em formacao aluno")
+@ExtendWith(MockitoExtension.class)
+class MangaServiceTest {
 
-    @Autowired
+    @InjectMocks
     private MangaService mangaService;
 
-    @MockBean
+    @Mock
     private MangaRepository mangaRepository;
 
     private Pageable pageable = PageRequest.of(1, 10);;

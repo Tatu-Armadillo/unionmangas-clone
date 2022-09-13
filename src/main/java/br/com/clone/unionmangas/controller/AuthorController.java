@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.clone.unionmangas.dto.author.AuthorGetDto;
-import br.com.clone.unionmangas.model.Author;
+import br.com.clone.unionmangas.dto.author.AuthorParamDto;
 import br.com.clone.unionmangas.response.*;
 import br.com.clone.unionmangas.service.AuthorService;
 import io.swagger.annotations.*;
@@ -46,7 +46,7 @@ public class AuthorController {
     @PostMapping
     @Transactional
     @ApiOperation("Endpoint responsible for creating an author")
-    public ResponseEntity<ResponseBase<AuthorGetDto>> createAuthor(@ApiParam(name = "idAuthor") @RequestBody final Author author) {
+    public ResponseEntity<ResponseBase<AuthorGetDto>> createAuthor(@ApiParam(name = "idAuthor") @RequestBody final AuthorParamDto author) {
         final var response = this.authorService.create(author);
         final var base = ResponseBase.of(response);
         return ResponseEntity.ok(base);
