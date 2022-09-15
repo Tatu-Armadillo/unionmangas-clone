@@ -23,7 +23,7 @@ public class ResponseBasePaginado<T> extends ResponseBase<T> {
   private T data;
 
   @ApiModelProperty(position = 4)
-  private PaginacaoBase paginacao;
+  private PaginacaoBase page;
 
   public static <T> ResponseBasePaginado<List<T>> of(final Page<T> data) {
     final var response = new ResponseBasePaginado<List<T>>();
@@ -32,8 +32,8 @@ public class ResponseBasePaginado<T> extends ResponseBase<T> {
     response.setSucess(true);
     response.setMessage(OPERACAO_SUCESSO);
 
-    final var paginacao = new PaginacaoBase(data);
-    response.setPaginacao(paginacao);
+    final var page = new PaginacaoBase(data);
+    response.setPage(page);
 
     return response;
   }
@@ -71,17 +71,17 @@ public class ResponseBasePaginado<T> extends ResponseBase<T> {
     return this;
   }
 
-  public PaginacaoBase getPaginacao() {
-    return this.paginacao;
+  public PaginacaoBase getPage() {
+      return page;
   }
 
-  public ResponseBasePaginado<T> setPaginacao(final PaginacaoBase paginacao) {
-    this.paginacao = paginacao;
+  public ResponseBasePaginado<T> setPage(final PaginacaoBase page) {
+    this.page = page;
     return this;
   }
 
   public <U> ResponseBasePaginado<T> setPaginacao(final Page<U> data) {
-    this.paginacao = new PaginacaoBase(data);
+    this.page = new PaginacaoBase(data);
     return this;
   }
 
