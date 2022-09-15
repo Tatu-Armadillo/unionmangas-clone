@@ -12,6 +12,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.clone.unionmangas.dto.author.AuthorParamDto;
+import br.com.clone.unionmangas.exception.RequiredObjectIsNullException;
 import br.com.clone.unionmangas.mock.MockAuthor;
 import br.com.clone.unionmangas.model.Author;
 import br.com.clone.unionmangas.repository.AuthorRepository;
@@ -55,6 +56,14 @@ class AuthorServiceTest {
     }
 
     @Test
+    void testFindByIdResponseNull() {
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> authorService.findById(-1L));
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
     void testCreate() {
         Author entity = input.mockAuthor(id);
         entity.setAge(id.intValue());
@@ -75,5 +84,14 @@ class AuthorServiceTest {
 
         assertEquals(result.getAge(), (id.intValue()));
     }
+
+    @Test
+    void testCreateNull() {
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> authorService.create(null));
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+    
 
 }

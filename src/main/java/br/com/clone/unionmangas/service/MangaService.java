@@ -12,6 +12,7 @@ import br.com.clone.unionmangas.dto.author.AuthorParamDto;
 import br.com.clone.unionmangas.dto.manga.MangaFindDto;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.exception.NegocioException;
+import br.com.clone.unionmangas.exception.RequiredObjectIsNullException;
 import br.com.clone.unionmangas.mapper.DozerMapper;
 import br.com.clone.unionmangas.model.*;
 import br.com.clone.unionmangas.repository.MangaRepository;
@@ -41,7 +42,7 @@ public class MangaService {
 
     public Manga findById(final Long idManga) {
         Manga manga = this.mangaRepository.findById(idManga)
-                .orElseThrow(() -> new NegocioException("Unavailable Title"));
+                .orElseThrow(() -> new RequiredObjectIsNullException("Unavailable Title"));
         return manga;
     }
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.clone.unionmangas.controller.AuthorController;
 import br.com.clone.unionmangas.dto.author.*;
-import br.com.clone.unionmangas.exception.NegocioException;
+import br.com.clone.unionmangas.exception.RequiredObjectIsNullException;
 import br.com.clone.unionmangas.model.Author;
 import br.com.clone.unionmangas.repository.AuthorRepository;
 
@@ -32,13 +32,14 @@ public class AuthorService {
     }
 
     public Author findByName(final String name) {
-        var response = this.authorRepository.findByName(name);
+        final var response = this.authorRepository.findByName(name);
+        if(response == null) throw new RequiredObjectIsNullException();
         return response;
     }
 
     public AuthorGetDto findById(final Long idAuthor) {
         final var db = this.authorRepository.findById(idAuthor)
-                .orElseThrow(() -> new NegocioException("Author not found"));
+                .orElseThrow(RequiredObjectIsNullException::new);
 
         final var response = AuthorGetDto.of(db);
         response.add(linkTo(methodOn(AuthorController.class).findById(idAuthor)).withSelfRel());
@@ -46,6 +47,7 @@ public class AuthorService {
     }
 
     public AuthorGetDto create(final AuthorParamDto param) {
+        if (param == null) throw new RequiredObjectIsNullException();
         Author author = new Author(
                 param.getName(),
                 param.getPseudonym(),
@@ -61,8 +63,7 @@ public class AuthorService {
     private Integer calcAge(LocalDate birthdate) {
         final var currentDate = LocalDate.now();
         final Period period = Period.between(birthdate, currentDate);
-        Integer age = period.getYears();
-        return age;
+        return period.getYears();
     }
 
 }
