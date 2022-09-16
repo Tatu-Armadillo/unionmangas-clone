@@ -16,17 +16,37 @@ import br.com.clone.unionmangas.dto.author.AuthorParamDto;
 import br.com.clone.unionmangas.response.*;
 import br.com.clone.unionmangas.service.AuthorService;
 import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/author")
+@Tag(name = "Author", description = "Endpoints for Managing Authors")
 public class AuthorController {
 
+    private final AuthorService authorService;
+
     @Autowired
-    private AuthorService authorService;
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
     @GetMapping
     @ApiOperation("Endpoint responsible for searching author by name or pseudonym")
+    @Operation(summary = "Searching author", description = "responsible for searching author by name or pseudonym", tags = {
+            "Author" }, responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = {
+                            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AuthorGetDto.class))) }),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBasePaginado<List<AuthorGetDto>>> findByName(
             @ApiIgnore @PageableDefault(sort = "name", direction = Direction.ASC) Pageable pageable,
             @ApiParam(name = "name") @RequestParam(required = true) final String name) {
@@ -37,7 +57,8 @@ public class AuthorController {
 
     @GetMapping("/{idAuthor}")
     @ApiOperation("Endpoint responsible for searching the author by id")
-    public ResponseEntity<ResponseBase<AuthorGetDto>> findById(@ApiParam(name = "idAuthor") @PathVariable final Long idAuthor) {
+    public ResponseEntity<ResponseBase<AuthorGetDto>> findById(
+            @ApiParam(name = "idAuthor") @PathVariable final Long idAuthor) {
         final var response = this.authorService.findById(idAuthor);
         final var base = ResponseBase.of(response);
         return ResponseEntity.ok(base);
@@ -46,7 +67,8 @@ public class AuthorController {
     @PostMapping
     @Transactional
     @ApiOperation("Endpoint responsible for creating an author")
-    public ResponseEntity<ResponseBase<AuthorGetDto>> createAuthor(@ApiParam(name = "idAuthor") @RequestBody final AuthorParamDto author) {
+    public ResponseEntity<ResponseBase<AuthorGetDto>> createAuthor(
+            @ApiParam(name = "idAuthor") @RequestBody final AuthorParamDto author) {
         final var response = this.authorService.create(author);
         final var base = ResponseBase.of(response);
         return ResponseEntity.ok(base);
