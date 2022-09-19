@@ -59,7 +59,7 @@ public class AuthorController {
     @ApiOperation("Endpoint responsible for searching the author by id")
     @Operation(summary = "Finds a author", description = "responsible for searching author by ID", tags = {
             "Author" }, responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = AuthorGetDto.class))),
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorGetDto.class))),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
@@ -77,12 +77,12 @@ public class AuthorController {
     @Transactional
     @ApiOperation("Endpoint responsible for creating an author")
     @Operation(summary = "Adds a new author", description = "Add a new Author by passing in a JSON representation of the Author", tags = {
-        "Author" }, responses = {
-                @ApiResponse(description = "Create", responseCode = "200", content = @Content(schema = @Schema(implementation = AuthorGetDto.class))),
-                @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
-        })
+            "Author" }, responses = {
+                    @ApiResponse(description = "Create", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorGetDto.class))),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBase<AuthorGetDto>> createAuthor(
             @ApiParam(name = "idAuthor") @RequestBody final AuthorParamDto author) {
         final var response = this.authorService.create(author);
