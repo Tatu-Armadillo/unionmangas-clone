@@ -14,8 +14,12 @@ import br.com.clone.unionmangas.repository.GenreRepository;
 @Service
 public class GenreService {
 
+    private final GenreRepository genreRepository;
+    
     @Autowired
-    private GenreRepository genreRepository;
+    public GenreService(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
+    }
 
     public Genre findByName(String name) {
         var respose = this.genreRepository.findByName(name);

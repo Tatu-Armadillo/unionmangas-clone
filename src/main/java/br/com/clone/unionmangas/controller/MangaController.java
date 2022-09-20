@@ -28,14 +28,20 @@ import br.com.clone.unionmangas.response.ResponseBasePaginado;
 import br.com.clone.unionmangas.service.MangaService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/mangas")
+@Tag(name = "Mangas", description = "Endpoints for Managing Mangas")
 public class MangaController {
 
+    private final MangaService mangaService;
+    
     @Autowired
-    private MangaService mangaService;
+    public MangaController(MangaService mangaService) {
+        this.mangaService = mangaService;
+    }
 
     @GetMapping
     @ApiOperation("endpoint responsible for fetching mangos by main and alias name")

@@ -22,8 +22,12 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/chapters")
 public class ChapterController {
 
+    private final ChapterService chapterService;
+    
     @Autowired
-    private ChapterService chapterService;
+    public ChapterController(ChapterService chapterService) {
+        this.chapterService = chapterService;
+    }
 
     @GetMapping("/{idManga}")
     @ApiOperation("Endpoint responsible for fetching the pages inside the manga")

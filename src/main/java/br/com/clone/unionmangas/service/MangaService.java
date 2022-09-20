@@ -20,14 +20,19 @@ import br.com.clone.unionmangas.repository.MangaRepository;
 @Service
 public class MangaService {
 
-    @Autowired
-    private MangaRepository mangaRepository;
+    private final MangaRepository mangaRepository;
+    private final AuthorService authorService;
+    private final GenreService genreService;
 
     @Autowired
-    private AuthorService authorService;
-
-    @Autowired
-    private GenreService genreService;
+    public MangaService(
+            MangaRepository mangaRepository,
+            AuthorService authorService,
+            GenreService genreService) {
+        this.mangaRepository = mangaRepository;
+        this.authorService = authorService;
+        this.genreService = genreService;
+    }
 
     public Page<MangaFindDto> findAllByName(final String filter, final Pageable pageable) {
         Page<MangaFindDto> mangaWeekDtos = this.mangaRepository.findByName(pageable, filter);

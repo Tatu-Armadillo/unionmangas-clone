@@ -18,8 +18,12 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/genres")
 public class GenreController {
 
+    private final GenreService genreService;
+    
     @Autowired
-    private GenreService genreService;
+    public GenreController(GenreService genreService) {
+        this.genreService = genreService;
+    }
 
     @GetMapping
     @ApiOperation("Endpoint responsible for showing existing genres in the system")

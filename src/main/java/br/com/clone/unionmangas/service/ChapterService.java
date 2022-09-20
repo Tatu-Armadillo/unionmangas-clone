@@ -14,11 +14,15 @@ import br.com.clone.unionmangas.repository.ChapterRepository;
 @Service
 public class ChapterService {
 
-    @Autowired
-    private ChapterRepository chapterRepository;
+    private final ChapterRepository chapterRepository;
 
+    private final MangaService mangaService;
+    
     @Autowired
-    private MangaService mangaService;
+    public ChapterService(ChapterRepository chapterRepository, MangaService mangaService) {
+        this.chapterRepository = chapterRepository;
+        this.mangaService = mangaService;
+    }
 
     public List<Chapter> findChaptersByManga(Long idManga) {
         final var response = this.chapterRepository.findChaptersByManga(idManga);
