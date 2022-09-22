@@ -1,7 +1,6 @@
 package br.com.clone.unionmangas.dto.manga;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import br.com.clone.unionmangas.dto.GenreDto;
 import br.com.clone.unionmangas.model.Manga;
@@ -11,7 +10,7 @@ public class MangaFindDto {
     private Long idManga;
     private String mainTitle;
     private String linkImage;
-    private Set<GenreDto> genres;
+    private List<GenreDto> genres;
 
     public MangaFindDto() { }
 
@@ -19,13 +18,7 @@ public class MangaFindDto {
         this.idManga = manga.getIdManga();
         this.mainTitle = manga.getMainTitle();
         this.linkImage = manga.getLinkImage();
-        this.genres = this.genreToGenreDto(manga);
-    }
-
-    private Set<GenreDto> genreToGenreDto(Manga manga) {
-        Set<GenreDto> genres = new HashSet<>();
-        manga.getGenres().forEach(c -> genres.add(new GenreDto(c)));
-        return genres;
+        this.genres = GenreDto.genreSetToGenreDtoList(manga.getGenres());
     }
 
     public Long getIdManga() {
@@ -52,12 +45,12 @@ public class MangaFindDto {
         this.linkImage = linkImage;
     }
 
-    public Set<GenreDto> getGenres() {
-        return genres;
-    }
+   public List<GenreDto> getGenres() {
+       return genres;
+   }
 
-    public void setGenres(Set<GenreDto> genres) {
-        this.genres = genres;
-    }
+   public void setGenres(List<GenreDto> genres) {
+       this.genres = genres;
+   }
 
 }
