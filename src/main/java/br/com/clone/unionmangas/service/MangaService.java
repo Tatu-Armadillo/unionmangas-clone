@@ -51,6 +51,13 @@ public class MangaService {
         return manga;
     }
 
+    public void verifyExistsManga(final Long idManga) {
+        final var manga = this.mangaRepository.findById(idManga);
+        if (!manga.isPresent()) {
+            throw new RequiredObjectIsNullException("Unavailable Title");
+        }
+    }
+
     public Manga create(final Manga manga) {
         var authors = this.createAuthor(manga.getAuthors());
         manga.setAuthors(authors);

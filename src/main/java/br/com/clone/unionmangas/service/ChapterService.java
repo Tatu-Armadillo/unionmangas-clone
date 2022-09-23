@@ -25,6 +25,7 @@ public class ChapterService {
     }
 
     public List<Chapter> findChaptersByManga(Long idManga) {
+        this.mangaService.verifyExistsManga(idManga);
         final var response = this.chapterRepository.findChaptersByManga(idManga);
         return response;
     }
