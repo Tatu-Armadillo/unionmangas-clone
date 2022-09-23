@@ -1,10 +1,11 @@
 package br.com.clone.unionmangas.service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.clone.unionmangas.exception.NegocioException;
@@ -29,8 +30,8 @@ public class GenreService {
         return respose;
     }
 
-    public List<Genre> findAllByName(String name) {
-        var respose = this.genreRepository.findAllByName(name);
+    public Page<Genre> findAllByName(Pageable pageable, String name) {
+        var respose = this.genreRepository.findAllByName(pageable, name);
         return respose;
     }
 

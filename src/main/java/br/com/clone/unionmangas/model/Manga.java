@@ -58,44 +58,6 @@ public class Manga {
     @OneToMany(mappedBy = "manga")
     private Set<Chapter> chapters;
 
-    public Manga() { }
-
-    public Manga(String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
-            String description, String status, Double rating, Integer volumeQuantity,
-            LocalDate releaseDate, LocalDate lastUpdate, Set<Author> authors, Set<Genre> genres) {
-        this.mainTitle = mainTitle;
-        this.alternativeTitle = alternativeTitle;
-        this.linkImage = linkImage;
-        this.blobImage = blobImage;
-        this.description = description;
-        this.status = status;
-        this.rating = rating;
-        this.volumeQuantity = volumeQuantity;
-        this.releaseDate = releaseDate;
-        this.lastUpdate = lastUpdate;
-        this.authors = authors;
-        this.genres = genres;
-    }
-
-    public Manga(Long idManga, String mainTitle, String alternativeTitle, String linkImage, byte[] blobImage,
-            String description, String status, Double rating, Integer volumeQuantity,
-            LocalDate releaseDate, LocalDate lastUpdate, Set<Author> authors, Set<Genre> genres, Set<Chapter> chapters) {
-        this.idManga = idManga;
-        this.mainTitle = mainTitle;
-        this.alternativeTitle = alternativeTitle;
-        this.linkImage = linkImage;
-        this.blobImage = blobImage;
-        this.description = description;
-        this.status = status;
-        this.rating = rating;
-        this.volumeQuantity = volumeQuantity;
-        this.releaseDate = releaseDate;
-        this.lastUpdate = lastUpdate;
-        this.authors = authors;
-        this.genres = genres;
-        this.chapters = chapters;
-    }
-
     public Long getIdManga() {
         return idManga;
     }
