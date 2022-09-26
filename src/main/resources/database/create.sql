@@ -61,10 +61,38 @@ create table mangas_authors (
     author bigint not null
 );
 
+drop table if exists permission;
+create table permission (
+	id_permission bigint primary key auto_increment,
+    description varchar(255) unique
+);
+
+drop table if exists users;
+create table users(
+	id_user bigint primary key auto_increment,
+    user_name varchar(255) unique not null,
+    full_name varchar(255) not null,
+    password varchar(255) not null,
+    account_non_expired bit(1) not null,
+    account_non_locked bit(1) not null,
+    credentials_non_expired bit(1) not null,
+    enabled bit(1) not null
+);
+
+drop table if exists user_permission;
+create table user_permission(
+	id_user bigint,
+    id_permission bigint,
+    primary key ( id_user, id_permission)
+);
+
+alter table user_permission add constraint fk_user_permission_user foreign key (id_user) references users (id_user);
+alter table user_permission add constraint fk_user_permission_permission foreign key (id_permission) references permission (id_permission);
+
 alter table chapters add constraint fk_chapters_mangas foreign key (manga) references mangas (id_manga);
 
-alter table mangas_genres add constraint fk_mangas_genres_manga foreign key (manga) references mangas (id_manga);
-alter table mangas_genres add constraint fk_mangas_genres_genre foreign key (genre) references genres (id_genre);
+alter table mangas_genres add constraint fk_mangas_genres_mangas foreign key (manga) references mangas (id_manga);
+alter table mangas_genres add constraint fk_mangas_genres_genres foreign key (genre) references genres (id_genre);
 
 alter table mangas_authors add constraint fk_mangas_authors_manga foreign key (manga) references mangas (id_manga);
 alter table mangas_authors add constraint fk_mangas_authors_author foreign key (author) references authors (id_author);
