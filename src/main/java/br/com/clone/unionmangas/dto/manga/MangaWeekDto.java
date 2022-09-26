@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import br.com.clone.unionmangas.dto.ChapterDto;
+import br.com.clone.unionmangas.dto.chapter.ChapterGetDto;
 import br.com.clone.unionmangas.model.Manga;
 
 public class MangaWeekDto {
@@ -13,9 +13,9 @@ public class MangaWeekDto {
     private String mainTitle;
     private String linkImage;
     private LocalDate lastUpdate;
-    private Set<ChapterDto> chapters;
+    private Set<ChapterGetDto> chapters;
 
-    public MangaWeekDto() {}
+    public MangaWeekDto() { }
 
     public MangaWeekDto(Manga manga) {
         this.idManga = manga.getIdManga();
@@ -25,9 +25,9 @@ public class MangaWeekDto {
         this.chapters = this.chapersToChapterDtos(manga);
     }
 
-    private Set<ChapterDto> chapersToChapterDtos(Manga manga) {
-        Set<ChapterDto> chapterDtos = new HashSet<>();
-        manga.getChapters().forEach(c -> chapterDtos.add(new ChapterDto(c)));
+    private Set<ChapterGetDto> chapersToChapterDtos(Manga manga) {
+        Set<ChapterGetDto> chapterDtos = new HashSet<>();
+        manga.getChapters().forEach(c -> chapterDtos.add(new ChapterGetDto(c)));
         return chapterDtos;
     }
 
@@ -63,11 +63,11 @@ public class MangaWeekDto {
         this.lastUpdate = lastUpdate;
     }
 
-    public Set<ChapterDto> getChapters() {
+    public Set<ChapterGetDto> getChapters() {
         return chapters;
     }
 
-    public void setChapters(Set<ChapterDto> chapters) {
+    public void setChapters(Set<ChapterGetDto> chapters) {
         this.chapters = chapters;
     }
 

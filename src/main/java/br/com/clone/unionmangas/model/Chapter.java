@@ -23,10 +23,10 @@ public class Chapter {
     private Integer numberChapter;
 
     @Column(name = "title_chapter")
-    private Integer titleChapter;
+    private String titleChapter;
 
-    @Column(name = "pages")
-    private Integer pages;
+    @Column(name = "pages_quantity")
+    private Integer pagesQuantity;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
@@ -43,15 +43,14 @@ public class Chapter {
     private Manga manga;
 
     public Chapter() { }
-
-    public Chapter(Long idChapter, Integer volume, Integer numberChapter, Integer pages, String linkPages,
-            Byte[] blobPages) {
-        this.idChapter = idChapter;
+    
+    public Chapter(Integer volume, Integer numberChapter, String titleChapter, Integer pagesQuantity,
+            String linkPages) {
         this.volume = volume;
         this.numberChapter = numberChapter;
-        this.pages = pages;
+        this.titleChapter = titleChapter;
+        this.pagesQuantity = pagesQuantity;
         this.linkPages = linkPages;
-        this.blobPages = blobPages;
     }
 
     public Long getIdChapter() {
@@ -78,12 +77,20 @@ public class Chapter {
         this.numberChapter = numberChapter;
     }
 
-    public Integer getPages() {
-        return pages;
+    public String getTitleChapter() {
+        return titleChapter;
     }
 
-    public void setPages(Integer pages) {
-        this.pages = pages;
+    public void setTitleChapter(String titleChapter) {
+        this.titleChapter = titleChapter;
+    }
+
+    public Integer getPagesQuantity() {
+        return pagesQuantity;
+    }
+
+    public void setPagesQuantity(Integer pagesQuantity) {
+        this.pagesQuantity = pagesQuantity;
     }
 
     public LocalDate getReleaseDate() {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import br.com.clone.unionmangas.dto.ChapterDto;
+import br.com.clone.unionmangas.dto.chapter.ChapterGetDto;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.enumerator.AgeGroupEnum;
 import br.com.clone.unionmangas.model.Author;
@@ -52,7 +52,7 @@ public class MockManga {
         Genre genre = new Genre(number.longValue(), "genre teste" + number, AgeGroupEnum.LIVRE, "description" + number);
         manga.setGenres(Set.of(genre));
 
-        Chapter chapter = new Chapter(number.longValue(), number, number, number, "linkChapter" + number, new Byte[number]);
+        Chapter chapter = new Chapter(number, number, "titleChapter", number, "linkChapter" + number);
         manga.setChapters(Set.of(chapter));
 
         return manga;
@@ -64,7 +64,7 @@ public class MockManga {
         manga.setLinkImage("linkImage" + number);
         manga.setLastUpdate(data);
 
-        ChapterDto chapter = new ChapterDto();
+        var chapter = new ChapterGetDto();
         chapter.setIdChapter(number.longValue());
         chapter.setNumberChapter(number);
         manga.setChapters(Set.of(chapter));

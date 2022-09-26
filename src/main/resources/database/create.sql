@@ -33,7 +33,7 @@ create table chapters (
     number_chapter int not null,
     title_chapter varchar(50) not null,
     release_date date not null,
-    pages int not null,
+    pages_quantity int not null,
     link_pages varchar(500),
     blob_pages mediumblob,
     manga bigint not null

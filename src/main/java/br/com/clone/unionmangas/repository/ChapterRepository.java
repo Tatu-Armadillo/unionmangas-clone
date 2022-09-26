@@ -1,7 +1,7 @@
 package br.com.clone.unionmangas.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +14,9 @@ public interface ChapterRepository extends JpaRepository<Chapter, Long> {
 
     @Query("SELECT chapter FROM Chapter chapter "
             + " JOIN chapter.manga manga"
-            + " WHERE manga.idManga = :idManga" )
-    List<Chapter> findChaptersByManga(@Param("idManga") Long idManga);
+            + " WHERE manga.idManga = :idManga")
+    Page<Chapter> findChaptersByManga(
+            Pageable pageable,
+            @Param("idManga") Long idManga);
 
 }
