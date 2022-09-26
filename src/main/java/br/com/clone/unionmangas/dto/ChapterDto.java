@@ -8,11 +8,12 @@ public class ChapterDto {
     private Integer numberVolume;
     private Integer numberChapter;
 
-    public ChapterDto() { }
+    public ChapterDto() {
+    }
 
     public ChapterDto(Chapter chapter) {
         this.idChapter = chapter.getIdChapter();
-        this.numberVolume = chapter.getNumberVolume();
+        this.numberVolume = chapter.getVolume();
         this.numberChapter = chapter.getNumberChapter();
     }
 
@@ -39,6 +40,5 @@ public class ChapterDto {
     public void setNumberChapter(Integer numberChapter) {
         this.numberChapter = numberChapter;
     }
-
 
 }

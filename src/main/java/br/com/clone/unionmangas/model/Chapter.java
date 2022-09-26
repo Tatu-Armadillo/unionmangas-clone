@@ -8,7 +8,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "chapter")
+@Table(name = "chapters")
 public class Chapter {
 
     @Id
@@ -16,38 +16,42 @@ public class Chapter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idChapter;
 
-    @Column(name = "number_volume")
-    private Integer numberVolume;
+    @Column(name = "volume")
+    private Integer volume;
 
     @Column(name = "number_chapter")
     private Integer numberChapter;
 
-    @Column(name = "number_pages")
-    private Integer numberPages;
+    @Column(name = "title_chapter")
+    private Integer titleChapter;
+
+    @Column(name = "pages")
+    private Integer pages;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @Column(name = "link_chapter")
-    private String linkChapter;
+    @Column(name = "link_pages")
+    private String linkPages;
 
-    @Column(name = "blob_chapter")
-    private Byte[] blobChapter;
+    @Column(name = "blob_pages")
+    private Byte[] blobPages;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "manga", foreignKey = @ForeignKey(name = "fk_chapter_manga"))
+    @JoinColumn(name = "manga", foreignKey = @ForeignKey(name = "fk_chapters_mangas"))
     private Manga manga;
 
     public Chapter() { }
 
-    public Chapter(Long idChapter, Integer numberVolume, Integer numberChapter, Integer numberPages, String linkChapter, Byte[] blobChapter) {
+    public Chapter(Long idChapter, Integer volume, Integer numberChapter, Integer pages, String linkPages,
+            Byte[] blobPages) {
         this.idChapter = idChapter;
-        this.numberVolume = numberVolume;
+        this.volume = volume;
         this.numberChapter = numberChapter;
-        this.numberPages = numberPages;
-        this.linkChapter = linkChapter;
-        this.blobChapter = blobChapter;
+        this.pages = pages;
+        this.linkPages = linkPages;
+        this.blobPages = blobPages;
     }
 
     public Long getIdChapter() {
@@ -58,12 +62,12 @@ public class Chapter {
         this.idChapter = idChapter;
     }
 
-    public Integer getNumberVolume() {
-        return numberVolume;
+    public Integer getVolume() {
+        return volume;
     }
 
-    public void setNumberVolume(Integer numberVolume) {
-        this.numberVolume = numberVolume;
+    public void setVolume(Integer volume) {
+        this.volume = volume;
     }
 
     public Integer getNumberChapter() {
@@ -74,12 +78,12 @@ public class Chapter {
         this.numberChapter = numberChapter;
     }
 
-    public Integer getNumberPages() {
-        return numberPages;
+    public Integer getPages() {
+        return pages;
     }
 
-    public void setNumberPages(Integer numberPages) {
-        this.numberPages = numberPages;
+    public void setPages(Integer pages) {
+        this.pages = pages;
     }
 
     public LocalDate getReleaseDate() {
@@ -90,20 +94,20 @@ public class Chapter {
         this.releaseDate = releaseDate;
     }
 
-    public String getLinkChapter() {
-        return linkChapter;
+    public String getLinkPages() {
+        return linkPages;
     }
 
-    public void setLinkChapter(String linkChapter) {
-        this.linkChapter = linkChapter;
+    public void setLinkPages(String linkPages) {
+        this.linkPages = linkPages;
     }
 
-    public Byte[] getBlobChapter() {
-        return blobChapter;
+    public Byte[] getBlobPages() {
+        return blobPages;
     }
 
-    public void setBlobChapter(Byte[] blobChapter) {
-        this.blobChapter = blobChapter;
+    public void setBlobPages(Byte[] blobPages) {
+        this.blobPages = blobPages;
     }
 
     public Manga getManga() {
@@ -121,7 +125,7 @@ public class Chapter {
         if (o == null || this.getClass() != o.getClass())
             return false;
         Chapter that = (Chapter) o;
-        return Objects.equals(this.numberVolume, that.numberVolume)
+        return Objects.equals(this.volume, that.volume)
                 && Objects.equals(this.numberChapter, that.numberChapter);
     }
 

@@ -8,7 +8,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "manga")
+@Table(name = "mangas")
 public class Manga {
 
     @Id
@@ -47,11 +47,11 @@ public class Manga {
     private LocalDate lastUpdate;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "manga_author", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "author"))
+    @JoinTable(name = "mangas_authors", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "author"))
     private Set<Author> authors;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "manga_genre ", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
+    @JoinTable(name = "mangas_genres ", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
     private Set<Genre> genres;
 
     @JsonIgnore

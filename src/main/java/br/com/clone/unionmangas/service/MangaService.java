@@ -108,7 +108,7 @@ public class MangaService {
     }
 
     public void updateReleaseDateAndVolumeQuantity(Manga manga, Chapter chapter) {
-        manga.setVolumeQuantity(chapter.getNumberVolume());
+        manga.setVolumeQuantity(chapter.getVolume());
         manga.setLastUpdate(chapter.getReleaseDate());
     }
 

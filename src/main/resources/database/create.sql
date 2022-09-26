@@ -2,68 +2,69 @@ drop database if exists unionmangas;
 create database unionmangas;
 use unionmangas;
 
-drop table if exists manga;
-create table manga (
+drop table if exists mangas;
+create table mangas (
     id_manga bigint primary key auto_increment,
     main_title varchar(100) not null unique,
     alternatives_title varchar(250),
-    link_image varchar(500),
+    link_image varchar(500) not null,
     blob_image mediumblob,
     volume_quantity int default 0 ,
     description varchar(1000) not null,
     status varchar(10) not null,
-    rating decimal(4,2) default 0.0,
+    rating decimal(4,2) not null default 0.0,
     release_date date not null,
     last_update date not null
 );
 
-drop table if exists author;
-create table author ( 
+drop table if exists authors;
+create table authors ( 
     id_author bigint primary key auto_increment,
     name varchar(100) not null unique,
-    pseudonym varchar(100) not null,
+    pseudonym varchar(100),
     age int not null,
     birthdate date not null    
 ); 
 
-drop table if exists chapter;
-create table chapter (
+drop table if exists chapters;
+create table chapters (
     id_chapter bigint primary key auto_increment,
-    number_volume int not null,
+    volume int not null,
     number_chapter int not null,
-    number_pages int not null,
+    title_chapter varchar(50) not null,
     release_date date not null,
-    link_chapter varchar(500),
-    blob_chapter mediumblob,
+    pages int not null,
+    link_pages varchar(500),
+    blob_pages mediumblob,
     manga bigint not null
 );
 
-drop table if exists genre;
-create table genre (
+drop table if exists genres;
+create table genres (
     id_genre bigint primary key auto_increment,
     name varchar(50) unique not null,
     age_group varchar(9) not null,
     description varchar(250)
 );
 
-drop table if exists manga_genre;
-create table manga_genre (
+drop table if exists mangas_genres;
+create table mangas_genres (
     id_manga_genre bigint primary key auto_increment,
     manga bigint not null,
     genre bigint not null
 );
 
-drop table if exists manga_author;
-create table manga_author (
+drop table if exists mangas_authors;
+create table mangas_authors (
     id_manga_author bigint primary key auto_increment,
     manga bigint not null,
     author bigint not null
 );
 
-alter table chapter add constraint fk_chapter_manga foreign key (manga) references manga (id_manga);
+alter table chapters add constraint fk_chapters_mangas foreign key (manga) references mangas (id_manga);
 
-alter table manga_genre add constraint fk_manga_genre_manga foreign key (manga) references manga (id_manga);
-alter table manga_genre add constraint fk_manga_genre_genre foreign key (genre) references genre (id_genre);
+alter table mangas_genres add constraint fk_mangas_genres_manga foreign key (manga) references mangas (id_manga);
+alter table mangas_genres add constraint fk_mangas_genres_genre foreign key (genre) references genres (id_genre);
 
-alter table manga_author add constraint fk_manga_author_manga foreign key (manga) references manga (id_manga);
-alter table manga_author add constraint fk_manga_author_author foreign key (author) references author (id_author);
+alter table mangas_authors add constraint fk_mangas_authors_manga foreign key (manga) references mangas (id_manga);
+alter table mangas_authors add constraint fk_mangas_authors_author foreign key (author) references authors (id_author);

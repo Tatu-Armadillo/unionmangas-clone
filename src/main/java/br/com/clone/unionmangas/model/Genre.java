@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.clone.unionmangas.enumerator.AgeGroupEnum;
 
 @Entity
-@Table(name = "genre")
+@Table(name = "genres")
 public class Genre {
 
     @Id
@@ -29,7 +29,7 @@ public class Genre {
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "manga_genre ", joinColumns = @JoinColumn(name = "genre"), inverseJoinColumns = @JoinColumn(name = "manga"))
+    @JoinTable(name = "mangas_genres ", joinColumns = @JoinColumn(name = "genre"), inverseJoinColumns = @JoinColumn(name = "manga"))
     private Set<Manga> mangas;
 
     public Genre() { }
