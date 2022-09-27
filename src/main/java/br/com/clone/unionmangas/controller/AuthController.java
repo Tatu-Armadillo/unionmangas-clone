@@ -17,7 +17,7 @@ import br.com.clone.unionmangas.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Authentication Endpoint")
+@Tag(name = "Authentication", description = "Endpoints for Managing token")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -30,7 +30,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @Operation(summary = "Authenticates a user and returns a token")
+    @Operation(summary = "Authenticates a user and returns a token", tags = { "Authentication" })
     @PostMapping("/signin")
     public ResponseEntity<TokenDto> signin(@RequestBody AccountCredentialsDto data) {
         if (data == null
@@ -47,7 +47,7 @@ public class AuthController {
 
     }
 
-    @Operation(summary = "Refresh token for authenticated user and returns a token")
+    @Operation(summary = "Refresh token for authenticated user and returns a token", tags = { "Authentication" })
     @PutMapping("/refresh/{username}")
     public ResponseEntity<TokenDto> refreshToken(
             @PathVariable("username") String username,
