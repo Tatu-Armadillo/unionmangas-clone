@@ -19,12 +19,12 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
     private final UserRepository userRepository;
-    
+
     @Autowired
     public AuthService(
-        AuthenticationManager authenticationManager,
-    JwtTokenProvider tokenProvider,
-    UserRepository userRepository) {
+            AuthenticationManager authenticationManager,
+            JwtTokenProvider tokenProvider,
+            UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
         this.userRepository = userRepository;
@@ -36,7 +36,7 @@ public class AuthService {
             final var password = data.getPassword();
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-            final var user =  this.userRepository.findByUsername(username);
+            final var user = this.userRepository.findByUsername(username);
 
             if (user != null) {
                 final var tokenResponse = this.tokenProvider.createAccessToken(username, user.getRoles());
@@ -46,6 +46,17 @@ public class AuthService {
             }
         } catch (Exception e) {
             throw new BadCredentialsException("Invalid username/password");
+        }
+    }
+
+    public ResponseEntity<TokenDto> refreshToken(String username, String refreshToken) {
+        final var user = this.userRepository.findByUsername(username);
+
+        if (user != null) {
+            final var tokenResponse = this.tokenProvider.refreshToken(refreshToken);
+            return ResponseEntity.ok(tokenResponse);
+        } else {
+            throw new UsernameNotFoundException("Username " + username + " not found!");
         }
     }
 
