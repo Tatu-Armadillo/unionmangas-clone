@@ -55,12 +55,27 @@ public class User implements UserDetails {
 
     public User() { }
 
+    public User(String userName, String fullName, String password, Boolean accountNonExpired, Boolean accountNonLocked,
+            Boolean credentialsNonExpired, Boolean enabled) {
+        this.userName = userName;
+        this.fullName = fullName;
+        this.password = password;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.enabled = enabled;
+    }
+
     public List<String> getRoles() {
         List<String> roles = new ArrayList<>();
         for (var permission : permissions) {
             roles.add(permission.getDescription());
         }
         return roles;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override

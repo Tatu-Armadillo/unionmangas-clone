@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.clone.unionmangas.config.TestConfigs;
 import br.com.clone.unionmangas.dto.author.AuthorGetDto;
 import br.com.clone.unionmangas.dto.author.AuthorParamDto;
+import br.com.clone.unionmangas.dto.security.AccountCredentialsDto;
+import br.com.clone.unionmangas.dto.security.TokenDto;
 import br.com.clone.unionmangas.integrations.containers.AbstractIntegrationTest;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -45,21 +47,60 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(1)
-    void testCreate() {
-        mockAuthor();
+    @Order(0)
+    void createUserTeste() {
+        AccountCredentialsDto credentials = new AccountCredentialsDto("teste", "teste123");
 
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
+                .setBasePath("/unionmangas/auth/create")
+                .setPort(TestConfigs.SERVER_PORT)
+                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
+                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
+                .build();
+
+        final var user = given()
+                .spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .body(credentials)
+                .when().post().then()
+                .statusCode(200);
+
+        assertNotNull(user);
+    }
+
+    @Test
+    @Order(1)
+    void authorization() {
+        AccountCredentialsDto user = new AccountCredentialsDto("teste", "teste123");
+
+        final var accessToken = given()
+                .basePath("/unionmangas/auth/signin")
+                .port(TestConfigs.SERVER_PORT)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .body(user)
+                .when().post().then()
+                .statusCode(200)
+                .extract().body().as(TokenDto.class).getAccessToken();
+
+        specification = new RequestSpecBuilder()
+                .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
                 .setBasePath("/unionmangas/author")
                 .setPort(TestConfigs.SERVER_PORT)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
                 .build();
 
-        var content = given()
-                .spec(specification)
+    }
+
+    @Test
+    @Order(2)
+    void testCreate() {
+        mockAuthor();
+
+        var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
                 .body(authorParam)
                 .when().post().then()
                 .statusCode(200)
@@ -87,21 +128,14 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void testCreateWithWrongOrigin() {
         mockAuthor();
 
-        specification = new RequestSpecBuilder()
-                .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FALHA)
-                .setBasePath("/unionmangas/author")
-                .setPort(TestConfigs.SERVER_PORT)
-                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-                .build();
-
-        var content = given()
-                .spec(specification)
+        var content = given().spec(specification)
+                .basePath("/unionmangas/author")
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FALHA)
                 .body(authorParam)
                 .when().post().then()
                 .statusCode(403)
@@ -114,21 +148,13 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void testFindById() {
         mockAuthor();
 
-        specification = new RequestSpecBuilder()
-                .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
-                .setBasePath("/unionmangas/author")
-                .setPort(TestConfigs.SERVER_PORT)
-                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-                .build();
-
-        var content = given()
-                .spec(specification)
+        var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
                 .pathParam("idAuthor", authorResponse.getIdAuthor())
                 .when().get("{idAuthor}").then()
                 .statusCode(200)
@@ -154,23 +180,15 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
         }
 
     }
-    
+
     @Test
-    @Order(4)
+    @Order(5)
     void testFindByIdWithWrongOrigin() {
         mockAuthor();
 
-        specification = new RequestSpecBuilder()
-                .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FALHA)
-                .setBasePath("/unionmangas/author")
-                .setPort(TestConfigs.SERVER_PORT)
-                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-                .build();
-
-        var content = given()
-                .spec(specification)
+        var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FALHA)
                 .pathParam("idAuthor", authorResponse.getIdAuthor())
                 .when().get("{idAuthor}").then()
                 .statusCode(403)

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.clone.unionmangas.dto.security.AccountCredentialsDto;
 import br.com.clone.unionmangas.dto.security.TokenDto;
 import br.com.clone.unionmangas.exception.NegocioException;
+import br.com.clone.unionmangas.response.ResponseBase;
 import br.com.clone.unionmangas.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,6 +31,18 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @Operation(summary = "Create a new users", tags = { "Authentication" })
+    @PostMapping("/create")
+    public ResponseEntity<ResponseBase<Void>> create(@RequestBody AccountCredentialsDto data) {
+        if (data == null
+                || data.getUserName() == null || data.getUserName().isBlank()
+                || data.getPassword() == null || data.getPassword().isBlank()) {
+            throw new NegocioException(message);
+        }
+        this.authService.create(data);
+        return ResponseEntity.ok(ResponseBase.empty());
+    }
+
     @Operation(summary = "Authenticates a user and returns a token", tags = { "Authentication" })
     @PostMapping("/signin")
     public ResponseEntity<TokenDto> signin(@RequestBody AccountCredentialsDto data) {
@@ -44,7 +57,6 @@ public class AuthController {
             throw new NegocioException(message);
         }
         return token;
-
     }
 
     @Operation(summary = "Refresh token for authenticated user and returns a token", tags = { "Authentication" })
@@ -60,7 +72,6 @@ public class AuthController {
             throw new NegocioException(message);
         }
         return token;
-
     }
 
 }

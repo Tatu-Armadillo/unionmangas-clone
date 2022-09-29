@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
-                .antMatchers("/auth/signin", "/auth/refresh", "/api-docs/**", "/swagger-ui.html**").permitAll()
+                .antMatchers("/auth/signin", "/auth/refresh", "/auth/create", "/api-docs/**", "/swagger-ui.html**").permitAll()
                 .antMatchers("/author/**").authenticated()
                 .antMatchers("/user").denyAll()
                 .and().cors().and().apply(new JwtConfigurer(tokenProvider));
