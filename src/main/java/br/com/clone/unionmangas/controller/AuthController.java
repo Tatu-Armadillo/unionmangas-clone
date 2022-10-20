@@ -40,7 +40,7 @@ public class AuthController {
             throw new NegocioException(message);
         }
         this.authService.create(data);
-        return ResponseEntity.ok(ResponseBase.empty());
+        return ResponseEntity.ok(ResponseBase.success());
     }
 
     @Operation(summary = "Authenticates a user and returns a token", tags = { "Authentication" })

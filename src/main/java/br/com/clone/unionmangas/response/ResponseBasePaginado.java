@@ -8,16 +8,16 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 @ApiModel(description = "Model responsável por encapsular todos responses paginados da api.")
-@JsonPropertyOrder({ "sucess", "message", "data", "paginacao" })
+@JsonPropertyOrder({ "success", "message", "data", "paginacao" })
 public class ResponseBasePaginado<T> extends ResponseBase<T> {
 
-  public static final String OPERACAO_SUCESSO = "Operação realizada com sucesso.";
+  private static String MESSAGE_SUCCESS = "Operation performed successfully";
 
   @ApiModelProperty(position = 2)
   private String message;
 
   @ApiModelProperty(position = 1)
-  private boolean sucess = true;
+  private boolean success = true;
 
   @ApiModelProperty(position = 3)
   private T data;
@@ -29,8 +29,8 @@ public class ResponseBasePaginado<T> extends ResponseBase<T> {
     final var response = new ResponseBasePaginado<List<T>>();
 
     response.setData(data.getContent());
-    response.setSucess(true);
-    response.setMessage(OPERACAO_SUCESSO);
+    response.setSuccess(true);
+    response.setMessage(MESSAGE_SUCCESS);
 
     final var page = new PaginacaoBase(data);
     response.setPage(page);
@@ -50,13 +50,13 @@ public class ResponseBasePaginado<T> extends ResponseBase<T> {
   }
 
   @Override
-  public boolean isSucess() {
-    return this.sucess;
+  public boolean isSuccess() {
+    return this.success;
   }
 
   @Override
-  public ResponseBasePaginado<T> setSucess(final boolean sucess) {
-    this.sucess = sucess;
+  public ResponseBasePaginado<T> setSuccess(final boolean success) {
+    this.success = success;
     return this;
   }
 

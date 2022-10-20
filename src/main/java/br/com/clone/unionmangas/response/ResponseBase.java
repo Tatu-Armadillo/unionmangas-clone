@@ -2,70 +2,68 @@ package br.com.clone.unionmangas.response;
 
 public class ResponseBase<T> {
 
-    private String message;
-  
-    private boolean sucess = true;
-  
-    private T data;
-  
-  
-    public static ResponseBase<Void> empty() {
-      return new ResponseBase<Void>()
+  private String message;
+
+  private boolean success = true;
+
+  private T data;
+
+  private static String MESSAGE_SUCCESS = "Operation performed successfully";
+
+  public static ResponseBase<Void> empty() {
+    return new ResponseBase<Void>()
         .setData(null)
-        .setSucess(true);
-    }
-  
-    public static <T> ResponseBase<T> of(final T data) {
-      return new ResponseBase<T>()
+        .setSuccess(true);
+  }
+
+  public static <T> ResponseBase<T> of(final T data) {
+    return new ResponseBase<T>()
         .setData(data)
-        .setMessage("Operação realizada com sucesso.")
-        .setSucess(true);
-    }
-  
-    public static <T> ResponseBase<T> of(
+        .setMessage(MESSAGE_SUCCESS)
+        .setSuccess(true);
+  }
+
+  public static <T> ResponseBase<T> of(
       final T data,
       final String message,
-      final boolean sucess
-    ) {
-      return new ResponseBase<T>()
+      final boolean success) {
+    return new ResponseBase<T>()
         .setData(data)
         .setMessage(message)
-        .setSucess(sucess);
-    }
-  
-    public static <T> ResponseBase<T> success() {
-      return new ResponseBase<T>()
-        .setData(null)
-        .setMessage("Operação realizada com sucesso.")
-        .setSucess(true);
-    }
-  
-    public String getMessage() {
-      return this.message;
-    }
-  
-    public ResponseBase<T> setMessage(final String message) {
-      this.message = message;
-      return this;
-    }
-  
-    public boolean isSucess() {
-      return this.sucess;
-    }
-  
-    public ResponseBase<T> setSucess(final boolean sucess) {
-      this.sucess = sucess;
-      return this;
-    }
-  
-    public T getData() {
-      return this.data;
-    }
-  
-    public ResponseBase<T> setData(final T entidade) {
-      this.data = entidade;
-      return this;
-    }
-  
+        .setSuccess(success);
   }
-  
+
+  public static <T> ResponseBase<T> success() {
+    return new ResponseBase<T>()
+        .setMessage(MESSAGE_SUCCESS)
+        .setSuccess(true);
+  }
+
+  public String getMessage() {
+    return this.message;
+  }
+
+  public ResponseBase<T> setMessage(final String message) {
+    this.message = message;
+    return this;
+  }
+
+  public boolean isSuccess() {
+    return this.success;
+  }
+
+  public ResponseBase<T> setSuccess(final boolean success) {
+    this.success = success;
+    return this;
+  }
+
+  public T getData() {
+    return this.data;
+  }
+
+  public ResponseBase<T> setData(final T entidade) {
+    this.data = entidade;
+    return this;
+  }
+
+}

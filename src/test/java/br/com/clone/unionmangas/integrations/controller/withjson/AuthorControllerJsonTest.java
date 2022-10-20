@@ -214,7 +214,7 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     // TEST FAILED DUE TO DETAILED CONTROLLER RESPONSE
     // CORRECTION MADE BY REMOVING THE DETAILED MESSAGE
     private String clearContent(String content) {
-        content = content.replace("{\"message\":\"Operação realizada com sucesso.\",\"sucess\":true,\"data\":", "");
+        content = content.replace("{\"message\":\"Operation performed successfully\",\"success\":true,\"data\":", "");
         content = content.replace("}]}}", "}");
         return content;
     }
