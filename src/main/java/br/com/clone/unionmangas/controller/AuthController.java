@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.clone.unionmangas.dto.security.AccountCredentialsDto;
+import br.com.clone.unionmangas.dto.security.CreateCredentialsDto;
 import br.com.clone.unionmangas.dto.security.TokenDto;
 import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.response.ResponseBase;
@@ -33,7 +34,7 @@ public class AuthController {
 
     @Operation(summary = "Create a new users", tags = { "Authentication" })
     @PostMapping("/create")
-    public ResponseEntity<ResponseBase<Void>> create(@RequestBody AccountCredentialsDto data) {
+    public ResponseEntity<ResponseBase<Void>> create(@RequestBody CreateCredentialsDto data) {
         if (data == null
                 || data.getUserName() == null || data.getUserName().isBlank()
                 || data.getPassword() == null || data.getPassword().isBlank()) {

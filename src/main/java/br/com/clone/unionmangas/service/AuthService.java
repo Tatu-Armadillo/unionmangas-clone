@@ -16,10 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.clone.unionmangas.dto.security.AccountCredentialsDto;
+import br.com.clone.unionmangas.dto.security.CreateCredentialsDto;
 import br.com.clone.unionmangas.dto.security.TokenDto;
-import br.com.clone.unionmangas.model.Permission;
 import br.com.clone.unionmangas.model.User;
-import br.com.clone.unionmangas.repository.PermissionRepository;
 import br.com.clone.unionmangas.repository.UserRepository;
 import br.com.clone.unionmangas.security.jwt.JwtTokenProvider;
 
@@ -29,31 +28,22 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
     private final UserRepository userRepository;
-    private final PermissionRepository permissionRepository;
+    private final PermissionService permissionService;
 
     @Autowired
     public AuthService(
             AuthenticationManager authenticationManager,
             JwtTokenProvider tokenProvider,
             UserRepository userRepository,
-            PermissionRepository permissionRepository) {
+            PermissionService permissionService) {
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
         this.userRepository = userRepository;
-        this.permissionRepository = permissionRepository;
+        this.permissionService = permissionService;
     }
 
-    public void create(AccountCredentialsDto data) {
-        var permissions = this.permissionRepository.findAll();
-        if (permissions.isEmpty()) {
-            var roles = List.of(new Permission("ADMIN"),
-                    new Permission("MANAGER"),
-                    new Permission("COMMON_USER"),
-                    new Permission("READER"));
-            this.permissionRepository.saveAll(roles);
-            this.permissionRepository.flush();
-            permissions = this.permissionRepository.findAll();
-        }
+    public void create(final CreateCredentialsDto data) {
+        final var permission = this.permissionService.getPermission(data.isScan());
 
         final var user = new User(
                 data.getUserName(),
@@ -63,7 +53,7 @@ public class AuthService {
                 true,
                 true,
                 true);
-        user.setPermissions(permissions);
+        user.setPermissions(List.of(permission));
 
         this.userRepository.save(user);
     }

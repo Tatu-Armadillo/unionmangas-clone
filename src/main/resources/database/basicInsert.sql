@@ -30,13 +30,7 @@ INSERT INTO `mangas` VALUES (5,'One Punch Man','ワンパンマン','https://sta
 INSERT INTO `mangas_genres` VALUES (1,5,7),(2,5,2),(3,5,12),(4,5,8),(5,5,6),(6,5,14),(7,6,13),(8,6,6),(9,6,5),(10,6,9),(11,7,3),(12,7,2),(13,7,6),(14,7,7),(15,7,9),(16,11,9),(17,11,11),(18,11,4),(19,11,3),(20,11,2),(21,12,9),(22,12,25),(23,12,24),(24,12,6),(25,13,2),(26,13,9),(27,13,25),(28,13,6),(29,14,2),(30,14,11),(31,14,3),(32,14,22),(33,15,3),(34,15,9),(35,15,2),(36,16,9),(37,16,2),(38,16,6);
 INSERT INTO `mangas_authors` VALUES (1,5,17),(2,5,18),(3,6,19),(4,7,21),(6,11,22),(7,11,23),(8,12,28),(9,13,29),(10,14,30),(11,15,31),(12,16,32);
 
-insert into permission (description) values ('ADMIN'), ('MANAGER'), ('COMMON_USER'), ('READER');
-
+insert into permission (description) values ('ADMIN'), ('SCAN_ADM'), ('COMMON_READER');
 INSERT INTO `users` (`user_name`, `full_name`, `password`, `account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`) VALUES
-	('leandro', 'Leandro Costa', '19bbf735b27066f2f145e602624e1b24a3fbc54cd5dfd3143fc5feea6bdee9e139ca7332d4806b9f', b'1', b'1', b'1', b'1'),
-	('flavio', 'Flavio Costa', '75ec349c1b0ef4ee7b249d0b83ae4861853f3aa77bce8c4b15f28cd43c6424ab4f29df431831bb0d', b'1', b'1', b'1', b'1');
-    
-INSERT INTO `user_permission` (`id_user`, `id_permission`) VALUES
-	(1, 1),
-	(2, 1),
-	(1, 2);
+	('admin', 'Adminstrador Principal', 'c3a7d64cf6bcf3b5bb0870cd138bce7a2523632c804e4765c894eac2cf5d6402e35a5b01de2290c0', b'1', b'1', b'1', b'1');
+INSERT INTO `user_permission` (`id_user`, `id_permission`) VALUES (1, 1);
