@@ -35,6 +35,8 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
 
     private static RequestSpecification specification;
     private static ObjectMapper objectMapper;
+    private static TokenDto tokenDto;
+    private static AccountCredentialsDto user;
 
     private static AuthorGetDto authorResponse;
     private static AuthorParamDto authorParam;
@@ -43,7 +45,8 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     public static void setUp() {
         objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
+        user = new AccountCredentialsDto("teste", "teste123");
+        
         authorResponse = new AuthorGetDto();
         authorParam = new AuthorParamDto();
     }
@@ -74,29 +77,42 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     @Test
     @Order(1)
     void authorization() {
-        AccountCredentialsDto user = new AccountCredentialsDto("teste", "teste123");
-
-        final var accessToken = given()
+        tokenDto = given()
                 .basePath("/unionmangas/auth/signin")
                 .port(TestConfigs.SERVER_PORT)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .body(user)
                 .when().post().then()
                 .statusCode(200)
-                .extract().body().as(TokenDto.class).getAccessToken();
+                .extract().body().as(TokenDto.class);
 
-        specification = new RequestSpecBuilder()
-                .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
-                .setBasePath("/unionmangas/author")
-                .setPort(TestConfigs.SERVER_PORT)
-                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-                .build();
-
+        assertNotNull(tokenDto);
+        assertNotNull(tokenDto.getAccessToken());
+        assertNotNull(tokenDto.getRefreshToken());
     }
 
     @Test
     @Order(2)
+    void refreshToken() {
+
+        final var newToken = given()
+                .basePath("/unionmangas/auth/refresh")
+                .port(TestConfigs.SERVER_PORT)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
+                .pathParam("username", user.getUserName())
+                .header(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenDto.getRefreshToken())
+                .body(user)
+                .when().put("{username}").then()
+                .statusCode(200)
+                .extract().body().as(TokenDto.class);
+
+        assertNotNull(newToken);
+        assertNotNull(newToken.getAccessToken());
+        assertNotNull(newToken.getRefreshToken());
+    }
+
+    @Test
+    @Order(3)
     void testCreate() {
         mockAuthor();
 
@@ -130,7 +146,7 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void testCreateWithWrongOrigin() {
         mockAuthor();
 
@@ -150,7 +166,7 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void testFindById() {
         mockAuthor();
 
@@ -184,7 +200,7 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void testFindByIdWithWrongOrigin() {
         mockAuthor();
 
