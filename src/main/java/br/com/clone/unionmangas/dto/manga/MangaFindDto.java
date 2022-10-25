@@ -5,6 +5,9 @@ import java.util.List;
 import br.com.clone.unionmangas.dto.GenreDto;
 import br.com.clone.unionmangas.model.Manga;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class MangaFindDto {
 
     private Long idManga;

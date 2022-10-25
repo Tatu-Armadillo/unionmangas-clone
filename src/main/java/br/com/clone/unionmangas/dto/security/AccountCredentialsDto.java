@@ -1,9 +1,14 @@
 package br.com.clone.unionmangas.dto.security;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class AccountCredentialsDto {
 
     private String userName;
     private String password;
+
+    public AccountCredentialsDto() { }
 
     public AccountCredentialsDto(String userName, String password) {
         this.userName = userName;

@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import br.com.clone.unionmangas.model.Chapter;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ChapterGetDto {
 
     private Long idChapter;

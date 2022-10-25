@@ -4,6 +4,9 @@ import org.springframework.hateoas.RepresentationModel;
 
 import br.com.clone.unionmangas.model.Author;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class AuthorGetDto extends RepresentationModel<AuthorGetDto> {
 
     private Long idAuthor;

@@ -6,6 +6,9 @@ import org.springframework.hateoas.RepresentationModel;
 
 import br.com.clone.unionmangas.model.Author;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class AuthorParamDto extends RepresentationModel<AuthorParamDto> {
 
     private String name;

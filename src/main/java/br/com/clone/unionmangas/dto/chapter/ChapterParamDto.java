@@ -2,6 +2,9 @@ package br.com.clone.unionmangas.dto.chapter;
 
 import br.com.clone.unionmangas.model.Chapter;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ChapterParamDto {
 
     private Integer volume;

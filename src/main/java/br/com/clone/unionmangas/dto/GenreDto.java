@@ -5,10 +5,15 @@ import java.util.stream.Collectors;
 
 import br.com.clone.unionmangas.model.Genre;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class GenreDto implements Comparable<GenreDto> {
 
     private Long idGenre;
     private String name;
+
+    public GenreDto() { }
 
     public GenreDto(Genre genre) {
         this.idGenre = genre.getIdGenre();
