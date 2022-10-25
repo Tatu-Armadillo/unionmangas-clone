@@ -19,6 +19,7 @@ import br.com.clone.unionmangas.config.TestConfigs;
 import br.com.clone.unionmangas.dto.author.AuthorGetDto;
 import br.com.clone.unionmangas.dto.author.AuthorParamDto;
 import br.com.clone.unionmangas.dto.security.AccountCredentialsDto;
+import br.com.clone.unionmangas.dto.security.CreateCredentialsDto;
 import br.com.clone.unionmangas.dto.security.TokenDto;
 import br.com.clone.unionmangas.integrations.containers.AbstractIntegrationTest;
 import io.restassured.builder.RequestSpecBuilder;
@@ -27,6 +28,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 
+// TODO CRIAR FORMA DE INSERIR PERMISSION NO MOMENTO DE EXECUCAO DOS TESTES
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
 class AuthorControllerJsonTest extends AbstractIntegrationTest {
@@ -49,7 +51,7 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     @Test
     @Order(0)
     void createUserTeste() {
-        AccountCredentialsDto credentials = new AccountCredentialsDto("teste", "teste123");
+        CreateCredentialsDto credentials = new CreateCredentialsDto("teste", "teste123", false);
 
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)
