@@ -47,20 +47,6 @@ create table categories (
     description varchar(250)
 );
 
-drop table if exists mangas_categories;
-create table mangas_categories (
-    id_manga_category bigint primary key auto_increment,
-    manga bigint not null,
-    category bigint not null
-);
-
-drop table if exists mangas_authors;
-create table mangas_authors (
-    id_manga_author bigint primary key auto_increment,
-    manga bigint not null,
-    author bigint not null
-);
-
 drop table if exists permission;
 create table permission (
 	id_permission bigint primary key auto_increment,
@@ -79,11 +65,41 @@ create table users(
     enabled bit(1) not null
 );
 
+drop table if exists readers;
+create table readers (
+    id_reader bigint primary key auto_increment,
+    email varchar(200) unique not null,
+    quantity_read int not null,
+    birthdate date,
+    user bigint
+);
+
+drop table if exists mangas_categories;
+create table mangas_categories (
+    id_manga_category bigint primary key auto_increment,
+    manga bigint not null,
+    category bigint not null
+);
+
+drop table if exists mangas_authors;
+create table mangas_authors (
+    id_manga_author bigint primary key auto_increment,
+    manga bigint not null,
+    author bigint not null
+);
+
 drop table if exists user_permission;
 create table user_permission(
 	id_user bigint,
     id_permission bigint,
     primary key ( id_user, id_permission)
+);
+
+drop table if exists readers_chapters;
+create table readers_chapters (
+    id_mangas_readers bigint primary key auto_increment,
+    reader bigint not null,
+    chapter bigint not null
 );
 
 alter table user_permission add constraint fk_user_permission_user foreign key (id_user) references users (id_user);
@@ -96,3 +112,8 @@ alter table mangas_categories add constraint fk_mangas_categories_categories for
 
 alter table mangas_authors add constraint fk_mangas_authors_manga foreign key (manga) references mangas (id_manga);
 alter table mangas_authors add constraint fk_mangas_authors_author foreign key (author) references authors (id_author);
+
+alter table readers add constraint fk_readers_user foreign key (user) references users (id_user);
+
+alter table readers_chapters add constraint fk_readers_chapters_chapter foreign key (chapter) references chapters (id_chapter);
+alter table readers_chapters add constraint fk_readers_chapters_reader foreign key (reader) references readers (id_reader);
