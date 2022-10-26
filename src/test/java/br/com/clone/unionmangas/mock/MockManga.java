@@ -10,7 +10,7 @@ import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.enumerator.AgeGroupEnum;
 import br.com.clone.unionmangas.model.Author;
 import br.com.clone.unionmangas.model.Chapter;
-import br.com.clone.unionmangas.model.Genre;
+import br.com.clone.unionmangas.model.Category;
 import br.com.clone.unionmangas.model.Manga;
 
 public class MockManga {
@@ -49,8 +49,8 @@ public class MockManga {
         Author author = new Author(number.longValue(), "author teste" + number, number, data);
         manga.setAuthors(Set.of(author));
 
-        Genre genre = new Genre(number.longValue(), "genre teste" + number, AgeGroupEnum.LIVRE, "description" + number);
-        manga.setGenres(Set.of(genre));
+        Category category = new Category(number.longValue(), "category teste" + number, AgeGroupEnum.LIVRE, "description" + number);
+        manga.setCategories(Set.of(category));
 
         Chapter chapter = new Chapter(number, number, "titleChapter", number, "linkChapter" + number);
         manga.setChapters(Set.of(chapter));

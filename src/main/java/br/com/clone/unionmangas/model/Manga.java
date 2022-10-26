@@ -51,8 +51,8 @@ public class Manga {
     private Set<Author> authors;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "mangas_genres ", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "genre"))
-    private Set<Genre> genres;
+    @JoinTable(name = "mangas_categories ", joinColumns = @JoinColumn(name = "manga"), inverseJoinColumns = @JoinColumn(name = "category"))
+    private Set<Category> categories;
 
     @JsonIgnore
     @OneToMany(mappedBy = "manga")
@@ -154,12 +154,12 @@ public class Manga {
         this.authors = authors;
     }
 
-    public Set<Genre> getGenres() {
-        return genres;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setGenres(Set<Genre> genres) {
-        this.genres = genres;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     public Set<Chapter> getChapters() {

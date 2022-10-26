@@ -22,9 +22,9 @@ Run the file to create the database
 `create.sql`
 
 ````
-Insert data into 'genre' table
+Insert data into 'category' table
 ````
-`insertgenres.sql`
+`insertcategories.sql`
 # Swagger Documentation Path 
 ````
 /unionmangas/swagger-ui.html

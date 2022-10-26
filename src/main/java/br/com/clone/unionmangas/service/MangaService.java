@@ -22,16 +22,16 @@ public class MangaService {
 
     private final MangaRepository mangaRepository;
     private final AuthorService authorService;
-    private final GenreService genreService;
+    private final CategoryService categoryService;
 
     @Autowired
     public MangaService(
             MangaRepository mangaRepository,
             AuthorService authorService,
-            GenreService genreService) {
+            CategoryService categoryService) {
         this.mangaRepository = mangaRepository;
         this.authorService = authorService;
-        this.genreService = genreService;
+        this.categoryService = categoryService;
     }
 
     public Page<MangaFindDto> findAllByName(final String filter, final Pageable pageable) {
@@ -57,8 +57,8 @@ public class MangaService {
         var authors = this.createAuthor(manga.getAuthors());
         manga.setAuthors(authors);
 
-        Set<Genre> genres = this.genreService.checkGenres(manga.getGenres());
-        manga.setGenres(genres);
+        Set<Category> categories = this.categoryService.checkCategories(manga.getCategories());
+        manga.setCategories(categories);
 
         if (manga.getRating() == null) {
             manga.setRating(0.0);
@@ -80,7 +80,7 @@ public class MangaService {
         mangaDb.setReleaseDate(manga.getReleaseDate());
 
         mangaDb.setLinkImage(manga.getLinkImage());
-        mangaDb.setGenres(manga.getGenres());
+        mangaDb.setCategories(manga.getCategories());
 
         this.setReturnAuthor(mangaDb, manga.getAuthors());
         return mangaDb;

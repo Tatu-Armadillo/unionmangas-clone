@@ -9,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.clone.unionmangas.enumerator.AgeGroupEnum;
 
 @Entity
-@Table(name = "genres")
-public class Genre {
+@Table(name = "categories")
+public class Category {
 
     @Id
-    @Column(name = "id_genre")
+    @Column(name = "id_category")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idGenre;
+    private Long idCategory;
 
     @Column(name = "name")
     private String name;
@@ -29,30 +29,30 @@ public class Genre {
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "mangas_genres ", joinColumns = @JoinColumn(name = "genre"), inverseJoinColumns = @JoinColumn(name = "manga"))
+    @JoinTable(name = "mangas_categories ", joinColumns = @JoinColumn(name = "category"), inverseJoinColumns = @JoinColumn(name = "manga"))
     private Set<Manga> mangas;
 
-    public Genre() { }
+    public Category() { }
 
-    public Genre(String name, AgeGroupEnum ageGroup, String description) {
+    public Category(String name, AgeGroupEnum ageGroup, String description) {
         this.name = name;
         this.ageGroup = ageGroup;
         this.description = description;
     }
 
-    public Genre(Long idGenre, String name, AgeGroupEnum ageGroup, String description) {
-        this.idGenre = idGenre;
+    public Category(Long idCategory, String name, AgeGroupEnum ageGroup, String description) {
+        this.idCategory = idCategory;
         this.name = name;
         this.ageGroup = ageGroup;
         this.description = description;
     }
 
-    public Long getIdGenre() {
-        return idGenre;
+    public Long getIdCategory() {
+        return idCategory;
     }
 
-    public void setIdGenre(Long idGenre) {
-        this.idGenre = idGenre;
+    public void setIdCategory(Long idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getName() {

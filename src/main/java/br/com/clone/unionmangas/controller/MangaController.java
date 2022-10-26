@@ -74,7 +74,7 @@ public class MangaController {
 
     @PostMapping
     @Transactional
-    @ApiOperation("Endpoint responsible for creating a new manga with author and genres")
+    @ApiOperation("Endpoint responsible for creating a new manga with author and categories")
     public ResponseEntity<ResponseBase<Manga>> createManga(@ApiParam(name = "manga") @RequestBody final Manga manga) {
         final var response = this.mangaService.create(manga);
         final var base = ResponseBase.of(response);
