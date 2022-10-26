@@ -16,11 +16,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "readers")
 public class Reader {
-    
+
     @Id
     @Column(name = "id_reader")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +30,7 @@ public class Reader {
 
     @Column(name = "quantity_read")
     private Integer quantityRead;
-    
+
     @Column(name = "birthdate")
     private LocalDate birthdate;
 
@@ -43,8 +42,7 @@ public class Reader {
     @JoinTable(name = "readers_chapters", joinColumns = @JoinColumn(name = "reader"), inverseJoinColumns = @JoinColumn(name = "chapter"))
     private Set<Chapter> chapters;
 
-    public Reader(Long idReader, String email, Integer quantityRead, LocalDate birthdate, User user) {
-        this.idReader = idReader;
+    public Reader(String email, Integer quantityRead, LocalDate birthdate, User user) {
         this.email = email;
         this.quantityRead = quantityRead;
         this.birthdate = birthdate;
@@ -98,7 +96,5 @@ public class Reader {
     public void setChapters(Set<Chapter> chapters) {
         this.chapters = chapters;
     }
-
-    
 
 }

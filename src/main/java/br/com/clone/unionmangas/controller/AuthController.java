@@ -16,6 +16,7 @@ import br.com.clone.unionmangas.dto.security.TokenDto;
 import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.response.ResponseBase;
 import br.com.clone.unionmangas.service.AuthService;
+import br.com.clone.unionmangas.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -25,11 +26,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
     private static final String message = "Invalid client request!";
 
     @Autowired
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, UserService userService) {
         this.authService = authService;
+        this.userService = userService;
     }
 
     @Operation(summary = "Create a new users", tags = { "Authentication" })
@@ -40,7 +43,7 @@ public class AuthController {
                 || data.getPassword() == null || data.getPassword().isBlank()) {
             throw new NegocioException(message);
         }
-        this.authService.create(data);
+        this.userService.createReader(data);
         return ResponseEntity.ok(ResponseBase.success());
     }
 
