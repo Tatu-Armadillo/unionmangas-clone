@@ -22,14 +22,12 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PermissionService permissionService;
-    private final ReaderService readerService;
 
     @Autowired
     public UserService(UserRepository userRepository, PermissionService permissionService,
             ReaderService readerService) {
         this.userRepository = userRepository;
         this.permissionService = permissionService;
-        this.readerService = readerService;
     }
 
     @Override
@@ -42,24 +40,22 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void createReader(final CreateCredentialsDto data) {
-        final var permission = this.permissionService.getPermission(data.isScan());
+    public void create(final CreateCredentialsDto data, boolean isScan) {
+        final var permission = this.permissionService.getPermission(isScan);
 
         final var user = new User(
-                data.getUserName(),
-                data.getUserName(),
+                data.getEmail(),
+                data.getFullName(),
                 securityPassword(data.getPassword()),
                 true,
                 true,
                 true,
                 true);
         user.setPermissions(List.of(permission));
-        final var persisted = this.userRepository.save(user);
-
-        this.readerService.create(data.getReaderDto(), persisted);
+        this.userRepository.save(user);
     }
 
-    private static String securityPassword(String password) {
+    private static String securityPassword(final String password) {
         Map<String, PasswordEncoder> encoders = new HashMap<>();
         encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
         DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);

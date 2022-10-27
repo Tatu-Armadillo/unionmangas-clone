@@ -54,7 +54,7 @@ class AuthorControllerJsonTest extends AbstractIntegrationTest {
     @Test
     @Order(0)
     void createUserTeste() {
-        CreateCredentialsDto credentials = new CreateCredentialsDto("teste", "teste123", false);
+        CreateCredentialsDto credentials = new CreateCredentialsDto("teste@gmail.com", "teste", "teste123");
 
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_FRONT)

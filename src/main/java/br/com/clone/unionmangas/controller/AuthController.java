@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.clone.unionmangas.dto.security.AccountCredentialsDto;
@@ -17,6 +18,7 @@ import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.response.ResponseBase;
 import br.com.clone.unionmangas.service.AuthService;
 import br.com.clone.unionmangas.service.UserService;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -37,13 +39,16 @@ public class AuthController {
 
     @Operation(summary = "Create a new users", tags = { "Authentication" })
     @PostMapping("/create")
-    public ResponseEntity<ResponseBase<Void>> create(@RequestBody CreateCredentialsDto data) {
+    public ResponseEntity<ResponseBase<Void>> create(
+        @ApiParam(name = "data") @RequestBody final CreateCredentialsDto data,
+        @ApiParam(name = "isScan") @RequestParam final boolean isScan
+        ) {
         if (data == null
-                || data.getUserName() == null || data.getUserName().isBlank()
+                || data.getEmail() == null || data.getEmail().isBlank()
                 || data.getPassword() == null || data.getPassword().isBlank()) {
             throw new NegocioException(message);
         }
-        this.userService.createReader(data);
+        this.userService.create(data, isScan);
         return ResponseEntity.ok(ResponseBase.success());
     }
 
