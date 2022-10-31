@@ -74,6 +74,30 @@ create table readers (
     user bigint
 );
 
+drop table if exists scans;
+create table scans (
+    id_scan bigint primary key auto_increment,
+    name varchar(200) unique not null,
+    website varchar(200),
+    number_of_affiliates int,
+    number_of_shipments int,
+    last_update date
+);
+
+drop table if exists scans_categories;
+create table scans_categories (
+    id_scan_category bigint primary key auto_increment,
+    scan bigint not null,
+    category bigint not null
+);
+
+drop table if exists scans_users;
+create table scans_users(
+    id_scan_user bigint primary key auto_increment,
+    scan bigint not null,
+    user bigint not null
+);
+
 drop table if exists mangas_categories;
 create table mangas_categories (
     id_manga_category bigint primary key auto_increment,
@@ -117,3 +141,9 @@ alter table readers add constraint fk_readers_user foreign key (user) references
 
 alter table readers_chapters add constraint fk_readers_chapters_chapter foreign key (chapter) references chapters (id_chapter);
 alter table readers_chapters add constraint fk_readers_chapters_reader foreign key (reader) references readers (id_reader);
+
+alter table scans_categories add constraint fk_scans_categories_scan foreign key (scan) references scans (id_scan);
+alter table scans_categories add constraint fk_scans_categories_category foreign key (category) references categories (id_category);
+
+alter table scans_users add constraint fk_scans_users_scan foreign key (scan) references scans (id_scan);
+alter table scans_users add constraint fk_scans_users_user foreign key (user) references users (id_user);
