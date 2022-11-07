@@ -43,7 +43,6 @@ public class AuthorController {
                     @ApiResponse(description = "Success", responseCode = "200", content = {
                             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AuthorGetDto.class))) }),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             })
@@ -57,12 +56,11 @@ public class AuthorController {
 
     @GetMapping("/{idAuthor}")
     @ApiOperation("Endpoint responsible for searching the author by id")
-    @Operation(summary = "Finds a author", description = "responsible for searching author by ID", tags = {
+    @Operation(summary = "Find author by ID", description = "responsible for searching author by ID", tags = {
             "Author" }, responses = {
                     @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorGetDto.class))),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             })

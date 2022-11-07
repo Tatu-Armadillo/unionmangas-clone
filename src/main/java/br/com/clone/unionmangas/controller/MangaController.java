@@ -29,6 +29,11 @@ import br.com.clone.unionmangas.response.ResponseBasePaginado;
 import br.com.clone.unionmangas.service.MangaService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -38,15 +43,23 @@ import springfox.documentation.annotations.ApiIgnore;
 public class MangaController {
 
     private final MangaService mangaService;
-    
+
     @Autowired
     public MangaController(MangaService mangaService) {
         this.mangaService = mangaService;
     }
 
-    @ApiPageable
     @GetMapping
-    @ApiOperation("endpoint responsible for fetching mangos by main and alias name")
+    @ApiPageable
+    @ApiOperation("Endpoint responsible for fetching mangas by main and alias name")
+    @Operation(summary = "Searching mangas", description = "responsible for searching mangas by primary or secondary name", tags = {
+            "Mangas" }, responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = {
+                            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MangaFindDto.class))) }),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBasePaginado<List<MangaFindDto>>> findAllMangas(
             @ApiIgnore @PageableDefault(sort = "mainTitle", direction = Direction.DESC) Pageable pageable,
             @ApiParam(name = "filter") @RequestParam(required = false, defaultValue = "") final String filter) {
@@ -56,7 +69,15 @@ public class MangaController {
     }
 
     @GetMapping("/{idManga}")
-    @ApiOperation("Endpoint responsible for searching the manga by id")
+    @ApiPageable
+    @ApiOperation("endpoint responsible for fetching mangas by main and alias name")
+    @Operation(summary = "Find manga by ID", description = "endpoint responsible for fetching mangas by main and alias name", tags = {
+            "Mangas" }, responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBase<Manga>> findById(@ApiParam(name = "idManga") @PathVariable final Long idManga) {
         final var response = this.mangaService.findById(idManga);
         final var base = ResponseBase.of(response);
@@ -65,6 +86,14 @@ public class MangaController {
 
     @GetMapping("/week")
     @ApiOperation("Endpoint responsible for returning the mangas updated in the week")
+    @Operation(summary = "Mangas Week", description = "responsible for returning the mangas updated in the week", tags = {
+            "Mangas" }, responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = {
+                            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MangaWeekDto.class))) }),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBasePaginado<List<MangaWeekDto>>> releaseWeek(
             @ApiIgnore @PageableDefault(sort = "lastUpdate", direction = Direction.DESC) Pageable pageable) {
         final var response = this.mangaService.releaseWeek(pageable);
@@ -75,6 +104,13 @@ public class MangaController {
     @PostMapping
     @Transactional
     @ApiOperation("Endpoint responsible for creating a new manga with author and categories")
+    @Operation(summary = "Adds a new manga", description = "Add a new manga with author and categories", tags = {
+            "Mangas" }, responses = {
+                    @ApiResponse(description = "Create", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBase<Manga>> createManga(@ApiParam(name = "manga") @RequestBody final Manga manga) {
         final var response = this.mangaService.create(manga);
         final var base = ResponseBase.of(response);
@@ -84,6 +120,13 @@ public class MangaController {
     @PutMapping("/{idManga}")
     @Transactional
     @ApiOperation("Endpoint responsible for changing the existing sleeve in the system")
+    @Operation(summary = "Udpdate a manga", description = "responsible for changing the existing sleeve in the system", tags = {
+            "Mangas" }, responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBase<Manga>> updateManga(
             @ApiParam(name = "idManga") @PathVariable final Long idManga,
             @ApiParam(name = "manga") @RequestBody final Manga manga) {
@@ -95,6 +138,13 @@ public class MangaController {
     @PutMapping("/image/{idManga}")
     @Transactional
     @ApiOperation("Endpoint responsible for inserting chapter cover in the system")
+    @Operation(summary = "Udpdate a chapter cove", description = "responsible for inserting chapter cover in the system", tags = {
+            "Mangas" }, responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBase<String>> updateImageManga(
             @ApiParam(name = "idManga") @PathVariable final Long idManga,
             @ApiParam(name = "image") @RequestParam final MultipartFile image) {
@@ -105,7 +155,14 @@ public class MangaController {
 
     @DeleteMapping("/{idManga}")
     @Transactional
-    @ApiOperation("Endpoint responsible for deleting mango from the system")
+    @ApiOperation("Endpoint responsible for deleting manga from the system")
+    @Operation(summary = "Udpdate a chapter cove", description = "responsible for deleting manga from the system", tags = {
+            "Mangas" }, responses = {
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public ResponseEntity<ResponseBase<String>> delete(@ApiParam(name = "idManga") @PathVariable final Long idManga) {
         var response = this.mangaService.delete(idManga);
         final var base = ResponseBase.of(response);
