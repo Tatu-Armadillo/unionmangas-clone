@@ -41,6 +41,10 @@ public class Scan {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "fk_scans_categories_category", joinColumns = @JoinColumn(name = "category"), inverseJoinColumns = @JoinColumn(name = "scan"))
     private Set<Category> categories;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "fk_scans_users_scan", joinColumns = @JoinColumn(name = "user"), inverseJoinColumns = @JoinColumn(name = "scan"))
+    private Set<Scan> scans;
 
     public Scan() { }
 
