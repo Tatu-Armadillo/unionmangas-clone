@@ -4,8 +4,7 @@ import java.util.List;
 
 import br.com.clone.unionmangas.dto.CategoryDto;
 import br.com.clone.unionmangas.model.Manga;
-
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class MangaFindDto {

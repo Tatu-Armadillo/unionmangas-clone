@@ -4,8 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import br.com.clone.unionmangas.model.Category;
-
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class CategoryDto implements Comparable<CategoryDto> {

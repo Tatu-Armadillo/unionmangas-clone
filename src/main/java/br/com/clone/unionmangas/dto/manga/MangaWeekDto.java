@@ -6,8 +6,7 @@ import java.util.Set;
 
 import br.com.clone.unionmangas.dto.chapter.ChapterGetDto;
 import br.com.clone.unionmangas.model.Manga;
-
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class MangaWeekDto {

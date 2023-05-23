@@ -2,8 +2,6 @@ package br.com.clone.unionmangas.controller;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -22,11 +20,9 @@ import br.com.clone.unionmangas.model.Chapter;
 import br.com.clone.unionmangas.response.ResponseBase;
 import br.com.clone.unionmangas.response.ResponseBasePaginado;
 import br.com.clone.unionmangas.service.ChapterService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import springfox.documentation.annotations.ApiIgnore;
+import jakarta.transaction.Transactional;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -45,7 +41,6 @@ public class ChapterController {
         }
 
         @GetMapping("/{idManga}")
-        @ApiOperation("Endpoint responsible for fetching the pages inside the manga")
         @Operation(summary = "Pages inside the manga", description = "responsible for fetching the pages inside the manga", tags = {
                         "Chapter" }, responses = {
                                         @ApiResponse(description = "Success", responseCode = "200", content = {
@@ -55,8 +50,8 @@ public class ChapterController {
                                         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
                         })
         public ResponseEntity<ResponseBasePaginado<List<ChapterGetDto>>> findChaptersByManga(
-                        @ApiIgnore @PageableDefault(sort = "releaseDate", direction = Direction.ASC) Pageable pageable,
-                        @ApiParam(name = "idManga") @PathVariable Long idManga) {
+                 @PageableDefault(sort = "releaseDate", direction = Direction.ASC) Pageable pageable,
+                        @PathVariable Long idManga) {
                 final var base = this.chapterService.findChaptersByManga(pageable, idManga);
                 final var response = ResponseBasePaginado.of(base);
                 return ResponseEntity.ok(response);
@@ -64,7 +59,6 @@ public class ChapterController {
 
         @Transactional
         @PostMapping("/{idManga}")
-        @ApiOperation("Endpoint responsible for adding pages to manga")
         @Operation(summary = "Add pages", description = "adding pages to manga", tags = {
                         "Chapter" }, responses = {
                                         @ApiResponse(description = "Create", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Chapter.class))),
@@ -73,8 +67,8 @@ public class ChapterController {
                                         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
                         })
         public ResponseEntity<ResponseBase<Void>> insertChapters(
-                        @ApiParam(name = "idManga") @PathVariable final Long idManga,
-                        @ApiParam(name = "chapter") @RequestBody final ChapterParamDto chapter) {
+                       @PathVariable final Long idManga,
+                       @RequestBody final ChapterParamDto chapter) {
                 this.chapterService.insertChapters(idManga, chapter);
                 return ResponseEntity.ok(ResponseBase.success());
         }

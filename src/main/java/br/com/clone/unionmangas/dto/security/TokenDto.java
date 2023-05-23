@@ -2,7 +2,7 @@ package br.com.clone.unionmangas.dto.security;
 
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class TokenDto {

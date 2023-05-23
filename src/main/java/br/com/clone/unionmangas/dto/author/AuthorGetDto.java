@@ -3,8 +3,7 @@ package br.com.clone.unionmangas.dto.author;
 import org.springframework.hateoas.RepresentationModel;
 
 import br.com.clone.unionmangas.model.Author;
-
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class AuthorGetDto extends RepresentationModel<AuthorGetDto> {

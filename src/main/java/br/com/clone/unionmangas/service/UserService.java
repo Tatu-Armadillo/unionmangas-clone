@@ -1,16 +1,11 @@
 package br.com.clone.unionmangas.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.clone.unionmangas.dto.security.CreateCredentialsDto;
@@ -46,7 +41,7 @@ public class UserService implements UserDetailsService {
         final var user = new User(
                 data.getEmail(),
                 data.getFullName(),
-                securityPassword(data.getPassword()),
+                "securityPassword(data.getPassword())",
                 true,
                 true,
                 true,
@@ -55,14 +50,9 @@ public class UserService implements UserDetailsService {
         this.userRepository.save(user);
     }
 
-    private static String securityPassword(final String password) {
-        Map<String, PasswordEncoder> encoders = new HashMap<>();
-        encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
-        DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
-        passwordEncoder.setDefaultPasswordEncoderForMatches(new Pbkdf2PasswordEncoder());
-
-        String result = passwordEncoder.encode(password);
-        return result.substring("{pbkdf2}".length());
+    public UserDetails findByUsername(String username) {
+        return this.userRepository.findByUsername(username);
     }
 
+   
 }

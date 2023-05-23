@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.clone.unionmangas.model.Category;
 import br.com.clone.unionmangas.response.ResponseBasePaginado;
 import br.com.clone.unionmangas.service.CategoryService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/categoires")
@@ -38,7 +35,6 @@ public class CategoryController {
     }
 
     @GetMapping
-    @ApiOperation("Endpoint responsible for showing existing categoires in the system")
     @Operation(summary = "Existing Categoires", description = "responsible for showing existing categoires in the system", tags = {
             "Category" }, responses = {
                     @ApiResponse(description = "Success", responseCode = "200", content = {
@@ -48,8 +44,8 @@ public class CategoryController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             })
     public ResponseEntity<ResponseBasePaginado<List<Category>>> getAllCategoires(
-            @ApiIgnore @PageableDefault(sort = "name", direction = Direction.ASC) Pageable pageable,
-            @ApiParam(name = "filter") @RequestParam(required = false, defaultValue = "") final String name) {
+            @PageableDefault(sort = "name", direction = Direction.ASC) Pageable pageable,
+            @RequestParam(required = false, defaultValue = "") final String name) {
         final var base = this.categoryService.findAllByName(pageable, name);
         final var response = ResponseBasePaginado.of(base);
         return ResponseEntity.ok(response);

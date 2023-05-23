@@ -3,8 +3,7 @@ package br.com.clone.unionmangas.dto.chapter;
 import java.time.LocalDate;
 
 import br.com.clone.unionmangas.model.Chapter;
-
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class ChapterGetDto {

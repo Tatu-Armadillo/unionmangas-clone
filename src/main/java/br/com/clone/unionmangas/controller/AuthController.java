@@ -18,7 +18,6 @@ import br.com.clone.unionmangas.exception.NegocioException;
 import br.com.clone.unionmangas.response.ResponseBase;
 import br.com.clone.unionmangas.service.AuthService;
 import br.com.clone.unionmangas.service.UserService;
-import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -40,8 +39,8 @@ public class AuthController {
     @Operation(summary = "Create a new users", tags = { "Authentication" })
     @PostMapping("/create")
     public ResponseEntity<ResponseBase<Void>> create(
-        @ApiParam(name = "data") @RequestBody final CreateCredentialsDto data,
-        @ApiParam(name = "isScan") @RequestParam final boolean isScan
+        @RequestBody final CreateCredentialsDto data,
+        @RequestParam final boolean isScan
         ) {
         if (data == null
                 || data.getEmail() == null || data.getEmail().isBlank()
