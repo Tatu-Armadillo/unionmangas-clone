@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.clone.unionmangas.config.response.ResponseBase;
+import br.com.clone.unionmangas.config.response.ResponseBasePaginado;
 import br.com.clone.unionmangas.dto.manga.MangaFindDto;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
 import br.com.clone.unionmangas.model.Manga;
-import br.com.clone.unionmangas.response.ResponseBase;
-import br.com.clone.unionmangas.response.ResponseBasePaginado;
 import br.com.clone.unionmangas.service.MangaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

@@ -1,4 +1,4 @@
-package br.com.clone.unionmangas.enumerator;
+package br.com.clone.unionmangas.model.enumerator;
 
 public enum AgeGroupEnum {
 

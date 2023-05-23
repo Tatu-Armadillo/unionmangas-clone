@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.clone.unionmangas.config.response.ResponseBase;
+import br.com.clone.unionmangas.config.response.ResponseBasePaginado;
 import br.com.clone.unionmangas.dto.chapter.ChapterGetDto;
 import br.com.clone.unionmangas.dto.chapter.ChapterParamDto;
 import br.com.clone.unionmangas.model.Chapter;
-import br.com.clone.unionmangas.response.ResponseBase;
-import br.com.clone.unionmangas.response.ResponseBasePaginado;
 import br.com.clone.unionmangas.service.ChapterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

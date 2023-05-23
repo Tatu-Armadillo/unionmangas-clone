@@ -9,9 +9,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import br.com.clone.unionmangas.config.response.*;
 import br.com.clone.unionmangas.dto.author.AuthorGetDto;
 import br.com.clone.unionmangas.dto.author.AuthorParamDto;
-import br.com.clone.unionmangas.response.*;
 import br.com.clone.unionmangas.service.AuthorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

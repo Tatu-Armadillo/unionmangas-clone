@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.clone.unionmangas.config.response.ResponseBase;
 import br.com.clone.unionmangas.dto.security.AccountCredentialsDto;
 import br.com.clone.unionmangas.dto.security.CreateCredentialsDto;
 import br.com.clone.unionmangas.dto.security.TokenDto;
 import br.com.clone.unionmangas.exception.NegocioException;
-import br.com.clone.unionmangas.response.ResponseBase;
 import br.com.clone.unionmangas.service.AuthService;
 import br.com.clone.unionmangas.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

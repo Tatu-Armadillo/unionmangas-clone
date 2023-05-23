@@ -1,4 +1,4 @@
-package br.com.clone.unionmangas.response;
+package br.com.clone.unionmangas.config.response;
 
 public class ResponseBase<T> {
 

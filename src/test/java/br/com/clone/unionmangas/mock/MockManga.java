@@ -7,11 +7,11 @@ import java.util.Set;
 
 import br.com.clone.unionmangas.dto.chapter.ChapterGetDto;
 import br.com.clone.unionmangas.dto.manga.MangaWeekDto;
-import br.com.clone.unionmangas.enumerator.AgeGroupEnum;
 import br.com.clone.unionmangas.model.Author;
 import br.com.clone.unionmangas.model.Chapter;
 import br.com.clone.unionmangas.model.Category;
 import br.com.clone.unionmangas.model.Manga;
+import br.com.clone.unionmangas.model.enumerator.AgeGroupEnum;
 
 public class MockManga {
 

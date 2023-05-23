@@ -1,4 +1,4 @@
-package br.com.clone.unionmangas.response;
+package br.com.clone.unionmangas.config.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.data.domain.Page;

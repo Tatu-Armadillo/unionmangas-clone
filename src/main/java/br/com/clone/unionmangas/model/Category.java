@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.clone.unionmangas.enumerator.AgeGroupEnum;
+import br.com.clone.unionmangas.model.enumerator.AgeGroupEnum;
 
 @Entity
 @Table(name = "categories")
