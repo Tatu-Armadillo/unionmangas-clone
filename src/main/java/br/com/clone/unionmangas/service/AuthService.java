@@ -1,57 +1,59 @@
 package br.com.clone.unionmangas.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.clone.unionmangas.config.security.TokenService;
 import br.com.clone.unionmangas.dto.security.AccountCredentialsDto;
+import br.com.clone.unionmangas.dto.security.CreateCredentialsDto;
 import br.com.clone.unionmangas.dto.security.TokenDto;
-import br.com.clone.unionmangas.repository.UserRepository;
+import br.com.clone.unionmangas.model.User;
 
 @Service
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final TokenService tokenService;
 
     @Autowired
     public AuthService(
-            AuthenticationManager authenticationManager,
-            UserRepository userRepository) {
+            final AuthenticationManager authenticationManager,
+            final PasswordEncoder passwordEncoder,
+            final UserService userService,
+            final TokenService tokenService) {
         this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
+        this.userService = userService;
+        this.tokenService = tokenService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public ResponseEntity<TokenDto> signin(AccountCredentialsDto data) {
-        try {
-            final var username = data.getUserName();
-            final var password = data.getPassword();
-            this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+    public TokenDto signin(AccountCredentialsDto data) {
+        final var username = data.getUserName();
+        final var password = data.getPassword();
+        final var user = this.userService.findByUsername(username);
 
-            final var user = this.userRepository.findByUsername(username);
-
-            if (user != null) {
-                return null;
-            } else {
-                throw new UsernameNotFoundException("Username " + username + " not found!");
-            }
-        } catch (Exception e) {
+        if (user == null) {
             throw new BadCredentialsException("Invalid username/password");
         }
+
+        final var authentication = this.authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+
+        final var token = new TokenDto(username, tokenService.createToken((User) authentication.getPrincipal()));
+
+        return token;
     }
 
-    public ResponseEntity<TokenDto> refreshToken(String username, String refreshToken) {
-        final var user = this.userRepository.findByUsername(username);
-
-        if (user != null) {
-            return null;
-        } else {
-            throw new UsernameNotFoundException("Username " + username + " not found!");
-        }
+    public void create(CreateCredentialsDto data, boolean isScan) {
+        final var password = passwordEncoder.encode(data.getPassword());
+        data.setPassword(password);
+        this.userService.create(data, isScan);
     }
 
 }

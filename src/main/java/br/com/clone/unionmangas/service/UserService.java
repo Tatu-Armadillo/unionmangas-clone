@@ -19,8 +19,10 @@ public class UserService implements UserDetailsService {
     private final PermissionService permissionService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PermissionService permissionService,
-            ReaderService readerService) {
+    public UserService(
+            final UserRepository userRepository,
+            final PermissionService permissionService,
+            final ReaderService readerService) {
         this.userRepository = userRepository;
         this.permissionService = permissionService;
     }
@@ -41,7 +43,7 @@ public class UserService implements UserDetailsService {
         final var user = new User(
                 data.getEmail(),
                 data.getFullName(),
-                "securityPassword(data.getPassword())",
+                data.getPassword(),
                 true,
                 true,
                 true,
@@ -54,5 +56,4 @@ public class UserService implements UserDetailsService {
         return this.userRepository.findByUsername(username);
     }
 
-   
 }
