@@ -24,6 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -50,7 +51,7 @@ public class ChapterController {
                                         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
                         })
         public ResponseEntity<ResponseBasePaginado<List<ChapterGetDto>>> findChaptersByManga(
-                 @PageableDefault(sort = "releaseDate", direction = Direction.ASC) Pageable pageable,
+                        @PageableDefault(sort = "releaseDate", direction = Direction.ASC) Pageable pageable,
                         @PathVariable Long idManga) {
                 final var base = this.chapterService.findChaptersByManga(pageable, idManga);
                 final var response = ResponseBasePaginado.of(base);
@@ -59,6 +60,7 @@ public class ChapterController {
 
         @Transactional
         @PostMapping("/{idManga}")
+        @SecurityRequirement(name = "bearer-key")
         @Operation(summary = "Add pages", description = "adding pages to manga", tags = {
                         "Chapter" }, responses = {
                                         @ApiResponse(description = "Create", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Chapter.class))),
@@ -67,8 +69,8 @@ public class ChapterController {
                                         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
                         })
         public ResponseEntity<ResponseBase<Void>> insertChapters(
-                       @PathVariable final Long idManga,
-                       @RequestBody final ChapterParamDto chapter) {
+                        @PathVariable final Long idManga,
+                        @RequestBody final ChapterParamDto chapter) {
                 this.chapterService.insertChapters(idManga, chapter);
                 return ResponseEntity.ok(ResponseBase.success());
         }

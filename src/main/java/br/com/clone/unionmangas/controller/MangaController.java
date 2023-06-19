@@ -29,6 +29,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 
@@ -93,6 +94,7 @@ public class MangaController {
 
         @PostMapping
         @Transactional
+        @SecurityRequirement(name = "bearer-key")
         @Operation(summary = "Adds a new manga", description = "Add a new manga with author and categories", tags = {
                         "Mangas" }, responses = {
                                         @ApiResponse(description = "Create", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),
@@ -109,6 +111,7 @@ public class MangaController {
 
         @PutMapping("/{idManga}")
         @Transactional
+        @SecurityRequirement(name = "bearer-key")
         @Operation(summary = "Udpdate a manga", description = "responsible for changing the existing sleeve in the system", tags = {
                         "Mangas" }, responses = {
                                         @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),
@@ -126,6 +129,7 @@ public class MangaController {
 
         @PutMapping("/image/{idManga}")
         @Transactional
+        @SecurityRequirement(name = "bearer-key")
         @Operation(summary = "Udpdate a chapter cove", description = "responsible for inserting chapter cover in the system", tags = {
                         "Mangas" }, responses = {
                                         @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),
@@ -143,6 +147,7 @@ public class MangaController {
 
         @DeleteMapping("/{idManga}")
         @Transactional
+        @SecurityRequirement(name = "bearer-key")
         @Operation(summary = "Udpdate a chapter cove", description = "responsible for deleting manga from the system", tags = {
                         "Mangas" }, responses = {
                                         @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Manga.class))),

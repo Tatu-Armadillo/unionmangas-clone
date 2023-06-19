@@ -33,9 +33,8 @@ public class AuthController {
     @Operation(summary = "Create a new users", tags = { "Authentication" })
     @PostMapping("/create")
     public ResponseEntity<ResponseBase<Void>> create(
-        @RequestBody final CreateCredentialsDto data,
-        @RequestParam final boolean isScan
-        ) {
+            @RequestBody final CreateCredentialsDto data,
+            @RequestParam final boolean isScan) {
         if (data == null
                 || data.getEmail() == null || data.getEmail().isBlank()
                 || data.getPassword() == null || data.getPassword().isBlank()) {

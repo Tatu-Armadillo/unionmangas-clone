@@ -27,28 +27,28 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Category", description = "Endpoints for Managing Categoires")
 public class CategoryController {
 
-    private final CategoryService categoryService;
+        private final CategoryService categoryService;
 
-    @Autowired
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
+        @Autowired
+        public CategoryController(CategoryService categoryService) {
+                this.categoryService = categoryService;
+        }
 
-    @GetMapping
-    @Operation(summary = "Existing Categoires", description = "responsible for showing existing categoires in the system", tags = {
-            "Category" }, responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = {
-                            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Category.class))) }),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
-            })
-    public ResponseEntity<ResponseBasePaginado<List<Category>>> getAllCategoires(
-            @PageableDefault(sort = "name", direction = Direction.ASC) Pageable pageable,
-            @RequestParam(required = false, defaultValue = "") final String name) {
-        final var base = this.categoryService.findAllByName(pageable, name);
-        final var response = ResponseBasePaginado.of(base);
-        return ResponseEntity.ok(response);
-    }
+        @GetMapping
+        @Operation(summary = "Existing Categoires", description = "responsible for showing existing categoires in the system", tags = {
+                        "Category" }, responses = {
+                                        @ApiResponse(description = "Success", responseCode = "200", content = {
+                                                        @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Category.class))) }),
+                                        @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                                        @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                                        @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+                        })
+        public ResponseEntity<ResponseBasePaginado<List<Category>>> getAllCategoires(
+                        @PageableDefault(sort = "name", direction = Direction.ASC) Pageable pageable,
+                        @RequestParam(required = false, defaultValue = "") final String name) {
+                final var base = this.categoryService.findAllByName(pageable, name);
+                final var response = ResponseBasePaginado.of(base);
+                return ResponseEntity.ok(response);
+        }
 
 }
