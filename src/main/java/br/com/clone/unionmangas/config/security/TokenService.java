@@ -25,7 +25,7 @@ public class TokenService {
         try {
             final var algorithm = Algorithm.HMAC256(secret);
             final String token = JWT.create()
-                    .withIssuer("Web Club Travel")
+                    .withIssuer("Clone Read Mangas")
                     .withSubject(user.getUsername())
                     .withExpiresAt(this.expirationDate())
                     .sign(algorithm);
@@ -39,7 +39,7 @@ public class TokenService {
         try {
             final var algorithm = Algorithm.HMAC256(secret);
             final var verifier = JWT.require(algorithm)
-                    .withIssuer("Web Club Travel")
+                    .withIssuer("Clone Read Mangas")
                     .build()
                     .verify(tokenJWT)
                     .getSubject();
