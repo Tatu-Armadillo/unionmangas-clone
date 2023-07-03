@@ -2,6 +2,7 @@ package br.com.clone.unionmangas.dto.chapter;
 
 import br.com.clone.unionmangas.model.Chapter;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 @XmlRootElement
 public class ChapterParamDto {
@@ -9,8 +10,8 @@ public class ChapterParamDto {
     private Integer volume;
     private Integer numberChapter;
     private String titleChapter;
-    private Integer pages;
-    private String linkPages;
+    private Integer pagesQuantity;
+    private List<PagesChapterDto> pagesImagens;
 
     public ChapterParamDto() { }
 
@@ -18,7 +19,8 @@ public class ChapterParamDto {
         this.volume = chapter.getVolume();
         this.numberChapter = chapter.getNumberChapter();
         this.titleChapter = chapter.getTitleChapter();
-        this.linkPages = chapter.getLinkPages();
+        this.pagesQuantity = chapter.getPagesQuantity();
+        this.pagesImagens = chapter.getPagesChapters().stream().map(PagesChapterDto::of).toList();
     }
 
     public Integer getVolume() {
@@ -45,20 +47,20 @@ public class ChapterParamDto {
         this.titleChapter = titleChapter;
     }
 
-    public Integer getPages() {
-        return pages;
+    public Integer getPagesQuantity() {
+        return pagesQuantity;
     }
 
-    public void setPages(Integer pages) {
-        this.pages = pages;
+    public void setPagesQuantity(Integer pagesQuantity) {
+        this.pagesQuantity = pagesQuantity;
     }
 
-    public String getLinkPages() {
-        return linkPages;
+    public List<PagesChapterDto> getPagesImagens() {
+        return pagesImagens;
     }
 
-    public void setLinkPages(String linkPages) {
-        this.linkPages = linkPages;
+    public void setPagesImagens(List<PagesChapterDto> pagesImagens) {
+        this.pagesImagens = pagesImagens;
     }
 
 }

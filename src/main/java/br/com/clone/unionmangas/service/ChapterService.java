@@ -18,42 +18,52 @@ import br.com.clone.unionmangas.repository.ChapterRepository;
 public class ChapterService {
 
     private final ChapterRepository chapterRepository;
-
     private final MangaService mangaService;
-    
+    private final PagesChapterService pagesChapterService;
+
     @Autowired
-    public ChapterService(ChapterRepository chapterRepository, MangaService mangaService) {
+    public ChapterService(
+            final ChapterRepository chapterRepository,
+            final MangaService mangaService,
+            final PagesChapterService pagesChapterService) {
         this.chapterRepository = chapterRepository;
         this.mangaService = mangaService;
+        this.pagesChapterService = pagesChapterService;
     }
 
-    public Page<ChapterGetDto> findChaptersByManga(Pageable pageable, Long idManga) {
+    public Page<ChapterGetDto> findChaptersByManga(final Pageable pageable, final Long idManga) {
         this.mangaService.findById(idManga);
         final var response = this.chapterRepository.findChaptersByManga(pageable, idManga);
         final var dtos = response.map(ChapterGetDto::new);
         return dtos;
     }
 
-    public void insertChapters(Long idManga, ChapterParamDto chapterDto) {
-        final var manga = this.mangaService.findById(idManga);
-        
-        final var chapter = new Chapter(
-            chapterDto.getVolume(),
-            chapterDto.getNumberChapter(),
-            chapterDto.getTitleChapter(),
-            chapterDto.getPages(),
-            chapterDto.getLinkPages());
-
-        this.checkExistenceChapter(manga, chapter);
-        
-        chapter.setReleaseDate(LocalDate.now());
-        this.mangaService.updateReleaseDateAndVolumeQuantity(manga, chapter);
-        
-        chapter.setManga(manga);
-        this.chapterRepository.save(chapter);
+    public ChapterGetDto openChapter(final Long idManga, final Integer numberChapter) {
+        final var response = this.chapterRepository.openChapter(idManga, numberChapter);
+        return new ChapterGetDto(response);
     }
 
-    private void checkExistenceChapter(Manga manga, Chapter chapter) {
+    public void insertChapters(final Long idManga, final ChapterParamDto chapterDto) {
+        final var manga = this.mangaService.findById(idManga);
+
+        final var chapter = new Chapter(
+                chapterDto.getVolume(),
+                chapterDto.getNumberChapter(),
+                chapterDto.getTitleChapter(),
+                chapterDto.getPagesQuantity());
+
+        this.checkExistenceChapter(manga, chapter);
+
+        chapter.setReleaseDate(LocalDate.now());
+        this.mangaService.updateReleaseDateAndVolumeQuantity(manga, chapter);
+
+        chapter.setManga(manga);
+        final var response = this.chapterRepository.save(chapter);
+
+        this.pagesChapterService.savePagesChapter(chapterDto.getPagesImagens(), response);
+    }
+
+    private void checkExistenceChapter(final Manga manga, final Chapter chapter) {
         final var chapters = manga.getChapters();
         for (Chapter c : chapters) {
             if (c.equals(chapter)) {

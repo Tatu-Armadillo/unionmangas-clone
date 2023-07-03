@@ -2,6 +2,7 @@ package br.com.clone.unionmangas.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -31,11 +32,9 @@ public class Chapter {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @Column(name = "link_pages")
-    private String linkPages;
-
-    @Column(name = "blob_pages")
-    private Byte[] blobPages;
+    @JsonIgnore
+    @OneToMany(mappedBy = "chapter")
+    private List<PagesChapter> pagesChapters;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
@@ -43,14 +42,12 @@ public class Chapter {
     private Manga manga;
 
     public Chapter() { }
-    
-    public Chapter(Integer volume, Integer numberChapter, String titleChapter, Integer pagesQuantity,
-            String linkPages) {
+
+    public Chapter(Integer volume, Integer numberChapter, String titleChapter, Integer pagesQuantity) {
         this.volume = volume;
         this.numberChapter = numberChapter;
         this.titleChapter = titleChapter;
         this.pagesQuantity = pagesQuantity;
-        this.linkPages = linkPages;
     }
 
     public Long getIdChapter() {
@@ -101,28 +98,20 @@ public class Chapter {
         this.releaseDate = releaseDate;
     }
 
-    public String getLinkPages() {
-        return linkPages;
-    }
-
-    public void setLinkPages(String linkPages) {
-        this.linkPages = linkPages;
-    }
-
-    public Byte[] getBlobPages() {
-        return blobPages;
-    }
-
-    public void setBlobPages(Byte[] blobPages) {
-        this.blobPages = blobPages;
-    }
-
     public Manga getManga() {
         return manga;
     }
 
     public void setManga(Manga manga) {
         this.manga = manga;
+    }
+
+    public List<PagesChapter> getPagesChapters() {
+        return pagesChapters;
+    }
+
+    public void setPagesChapters(List<PagesChapter> pagesChapters) {
+        this.pagesChapters = pagesChapters;
     }
 
     @Override

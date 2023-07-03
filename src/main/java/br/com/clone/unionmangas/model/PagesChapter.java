@@ -21,14 +21,14 @@ public class PagesChapter {
     private Byte[] blobPages;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "manga", foreignKey = @ForeignKey(name = "fk_chapters_mangas"))
+    @JoinColumn(name = "chapter", foreignKey = @ForeignKey(name = "fk_pages_chapters_chapters"))
     private Chapter chapter;
 
     public PagesChapter() { }
 
-    public PagesChapter(Long idPagesChapter, Integer pageNumber, Chapter chapter) {
-        this.idPagesChapter = idPagesChapter;
+    public PagesChapter(Integer pageNumber, Byte[] blobPages, Chapter chapter) {
         this.pageNumber = pageNumber;
+        this.blobPages = blobPages;
         this.chapter = chapter;
     }
 

@@ -47,7 +47,7 @@ public class MangaService {
     public Manga findById(final Long idManga) {
         final var manga = this.mangaRepository.findById(idManga);
         if (!manga.isPresent()) {
-            throw new RequiredObjectIsNullException("Unavailable Title");
+            throw new RequiredObjectIsNullException("Unavailable Title Manga");
         }
         return manga.get();
     }

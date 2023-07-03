@@ -12,11 +12,19 @@ import br.com.clone.unionmangas.model.Chapter;
 @Repository
 public interface ChapterRepository extends JpaRepository<Chapter, Long> {
 
-    @Query("SELECT chapter FROM Chapter chapter "
-            + " JOIN chapter.manga manga"
-            + " WHERE manga.idManga = :idManga")
-    Page<Chapter> findChaptersByManga(
-            Pageable pageable,
-            @Param("idManga") Long idManga);
+        @Query("SELECT chapter FROM Chapter chapter "
+                        + " JOIN chapter.manga manga"
+                        + " WHERE manga.idManga = :idManga")
+        Page<Chapter> findChaptersByManga(
+                        Pageable pageable,
+                        @Param("idManga") Long idManga);
+
+        @Query("SELECT chapter from Chapter chapter "
+                        + " JOIN chapter.manga manga"
+                        + " WHERE manga.idManga = :idManga"
+                        + " AND chapter.numberChapter = :numberChapter")
+        Chapter openChapter(
+                        @Param("idManga") Long idManga,
+                        @Param("numberChapter") Integer numberChapter);
 
 }

@@ -51,10 +51,27 @@ public class ChapterController {
                                         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
                         })
         public ResponseEntity<ResponseBasePaginado<List<ChapterGetDto>>> findChaptersByManga(
-                        @PageableDefault(sort = "releaseDate", direction = Direction.ASC) Pageable pageable,
-                        @PathVariable Long idManga) {
+                        @PageableDefault(sort = "releaseDate", direction = Direction.ASC) final Pageable pageable,
+                        @PathVariable final Long idManga) {
                 final var base = this.chapterService.findChaptersByManga(pageable, idManga);
                 final var response = ResponseBasePaginado.of(base);
+                return ResponseEntity.ok(response);
+        }
+
+        @GetMapping("read/{idManga}/online/{numberChapter}")
+        @Operation(summary = "Opening chapter for reading", description = "responsible for opening chapter for reading", tags = {
+                        "Chapter" }, responses = {
+                                        @ApiResponse(description = "Success", responseCode = "200", content = {
+                                                        @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Chapter.class))) }),
+                                        @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                                        @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                                        @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+                        })
+        public ResponseEntity<ResponseBase<ChapterGetDto>> readChapter(
+                        @PathVariable final Long idManga,
+                        @PathVariable final Integer numberChapter) {
+                final var base = this.chapterService.openChapter(idManga, numberChapter);
+                final var response = ResponseBase.of(base);
                 return ResponseEntity.ok(response);
         }
 
@@ -70,8 +87,8 @@ public class ChapterController {
                         })
         public ResponseEntity<ResponseBase<Void>> insertChapters(
                         @PathVariable final Long idManga,
-                        @RequestBody final ChapterParamDto chapter) {
-                this.chapterService.insertChapters(idManga, chapter);
+                        @RequestBody final ChapterParamDto chapterDto) {
+                this.chapterService.insertChapters(idManga, chapterDto);
                 return ResponseEntity.ok(ResponseBase.success());
         }
 
