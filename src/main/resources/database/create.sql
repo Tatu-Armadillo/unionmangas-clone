@@ -34,9 +34,16 @@ create table chapters (
     title_chapter varchar(50) not null,
     release_date date not null,
     pages_quantity int not null,
+    manga bigint not null
+);
+
+drop table if exists pages_chapters;
+create table pages_chapters (
+    id_pages_chapter bigint primary key auto_increment,
+    page_number int,
     link_pages varchar(500),
     blob_pages mediumblob,
-    manga bigint not null
+    chapter bigint
 );
 
 drop table if exists categories;
@@ -130,6 +137,8 @@ alter table user_permission add constraint fk_user_permission_user foreign key (
 alter table user_permission add constraint fk_user_permission_permission foreign key (id_permission) references permission (id_permission);
 
 alter table chapters add constraint fk_chapters_mangas foreign key (manga) references mangas (id_manga);
+
+alter table pages_chapters add constraint fk_pages_chapters_chapters foreign key (chapter) references chapters (id_chapter);
 
 alter table mangas_categories add constraint fk_mangas_categories_mangas foreign key (manga) references mangas (id_manga);
 alter table mangas_categories add constraint fk_mangas_categories_categories foreign key (category) references categories (id_category);

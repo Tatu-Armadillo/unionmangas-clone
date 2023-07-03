@@ -52,7 +52,7 @@ public class MockManga {
         Category category = new Category(number.longValue(), "category teste" + number, AgeGroupEnum.LIVRE, "description" + number);
         manga.setCategories(Set.of(category));
 
-        Chapter chapter = new Chapter(number, number, "titleChapter", number, "linkChapter" + number);
+        Chapter chapter = new Chapter(number, number, "titleChapter", number);
         manga.setChapters(Set.of(chapter));
 
         return manga;
