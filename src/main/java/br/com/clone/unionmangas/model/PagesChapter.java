@@ -3,7 +3,7 @@ package br.com.clone.unionmangas.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PageChapter")
+@Table(name = "pages_chapters")
 public class PagesChapter {
 
     @Id
@@ -26,8 +26,9 @@ public class PagesChapter {
 
     public PagesChapter() { }
 
-    public PagesChapter(Integer pageNumber, Byte[] blobPages, Chapter chapter) {
+    public PagesChapter(Integer pageNumber, String linkPages, Byte[] blobPages, Chapter chapter) {
         this.pageNumber = pageNumber;
+        this.linkPages = linkPages;
         this.blobPages = blobPages;
         this.chapter = chapter;
     }

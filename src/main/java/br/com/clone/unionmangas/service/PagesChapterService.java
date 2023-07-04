@@ -22,7 +22,7 @@ public class PagesChapterService {
     public void savePagesChapter(final List<PagesChapterDto> pages, final Chapter chapter) {
 
         for (PagesChapterDto dto : pages) {
-            final var entity = new PagesChapter(dto.getPageNumber(), dto.getBlobPages(), chapter);
+            final var entity = new PagesChapter(dto.getPageNumber(), dto.getLinkPages(), dto.getBlobPages(), chapter);
             this.pagesChapterRepository.save(entity);
         }
     }

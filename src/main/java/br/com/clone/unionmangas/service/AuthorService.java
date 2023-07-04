@@ -20,7 +20,7 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
-    @Autowired 
+    @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
@@ -33,7 +33,8 @@ public class AuthorService {
 
     public Author findByName(final String name) {
         final var response = this.authorRepository.findByName(name);
-        if(response == null) throw new RequiredObjectIsNullException();
+        if (response == null)
+            throw new RequiredObjectIsNullException();
         return response;
     }
 
@@ -47,7 +48,8 @@ public class AuthorService {
     }
 
     public AuthorGetDto create(final AuthorParamDto param) {
-        if (param == null) throw new RequiredObjectIsNullException();
+        if (param == null)
+            throw new RequiredObjectIsNullException();
         Author author = new Author(
                 param.getName(),
                 param.getPseudonym(),
