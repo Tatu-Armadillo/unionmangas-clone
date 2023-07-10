@@ -19,6 +19,7 @@ insert into categories (name, age_group) values('YAOI', 'MAIOR_12');
 insert into categories (name, age_group) values('YURI', 'MAIOR_12');
 insert into categories (name, age_group) values('JIDAIGEKI', 'MAIOR_14');
 insert into categories (name, age_group) values('HISTORICO', 'MAIOR_14');
+insert into categories (name, age_group) values('MISTERIO', 'MAIOR_14');
 insert into categories (name, age_group) values('ECCHI', 'MAIOR_16'); 
 insert into categories (name, age_group) values('GEKIGA', 'MAIOR_18');
 insert into categories (name, age_group) values('SEINEN', 'MAIOR_18');
