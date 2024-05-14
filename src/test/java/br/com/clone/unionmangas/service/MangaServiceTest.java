@@ -41,7 +41,7 @@ class MangaServiceTest {
     @Test
     @DisplayName("Check that the return of all mangas for the week is not empty")
     void findAllMangasByWeekIsNotEmpty() {
-        mangas = this.mangaService.releaseWeek(pageable);
+        this.mangas = this.mangaService.releaseWeek(pageable);
         Assertions.assertTrue(!mangas.isEmpty());
     }
 

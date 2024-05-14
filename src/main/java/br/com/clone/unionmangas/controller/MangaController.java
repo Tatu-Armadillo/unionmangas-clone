@@ -62,6 +62,25 @@ public class MangaController {
                 return ResponseEntity.ok(base);
         }
 
+        // TODO NOVO METODO 
+        // TODO FAZER A BUSCA PELO NOME DO AUTOR OU ID DO AUTOR 
+        // @GetMapping
+        // @Operation(summary = "Searching mangas by author", description = "responsible for browse works written by the selected author", tags = {
+        //                 "Mangas" }, responses = {
+        //                                 @ApiResponse(description = "Success", responseCode = "200", content = {
+        //                                                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MangaFindDto.class))) }),
+        //                                 @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+        //                                 @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+        //                                 @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        //                 })
+        // public ResponseEntity<ResponseBasePaginado<List<MangaFindDto>>> findAllMangasByAuthor(
+        //                 @PageableDefault(sort = "mainTitle", direction = Direction.DESC) Pageable pageable,
+        //                 @RequestParam(required = false, defaultValue = "") final String filter) {
+        //         final var response = this.mangaService.findAllMangasByAuthor(filter, pageable);
+        //         final var base = ResponseBasePaginado.of(response);
+        //         return ResponseEntity.ok(base);
+        // }
+
         @GetMapping("/{idManga}")
         @Operation(summary = "Find manga by ID", description = "endpoint responsible for fetching mangas by main and alias name", tags = {
                         "Mangas" }, responses = {
